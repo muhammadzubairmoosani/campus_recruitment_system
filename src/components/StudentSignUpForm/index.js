@@ -2,10 +2,30 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Col, Button } from 'react-bootstrap'
+import Middleware from "../../store/middleware";
 
 
 class StudentSignUp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            accountType: this.props.accountType,
+            name: '',
+            rollNo: '',
+            gender: '',
+            mobile: '',
+            age: '',
+            university: '',
+            Branch: '',
+            marks: '',
+            email: '',
+            password: '',
+            address: '',
+            otherSkills: ''
+        }
+    }
     render() {
+        const { signUpDispatch } = this.props;
         return (
             <div className='d-flex justify-content-center'>
                 <Form className='shadow mt-3 col-xl-6 col-md-6 p-3'>
@@ -73,7 +93,7 @@ class StudentSignUp extends React.Component {
                     </Form.Row>
                     <Form.Row className='mb-3'>
                         <Col>
-                            <Button>
+                            <Button onClick={() => signUpDispatch(this.state)}>
                                 <small>REGISTERED</small>
                             </Button>
                         </Col>
@@ -85,8 +105,13 @@ class StudentSignUp extends React.Component {
 };
 function mapStateToProps(state) {
     return {
-        // accountType: state.reducer.accountType,
-        // formTitle: state.reducer.logInFormTitle
+        accountType: state.reducer.accountType,
     }
 }
-export default connect(mapStateToProps)(StudentSignUp);
+function mapDispatchToProps(dispatch) {
+    return {
+        signUpDispatch: data => dispatch(Middleware.signUp(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentSignUp);

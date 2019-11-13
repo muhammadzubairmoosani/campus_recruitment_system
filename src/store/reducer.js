@@ -6,7 +6,8 @@ import {
 
 const initialState = {
     accountType: '',
-    user: {}
+    user: {},
+    // message: ''
 }
 
 export default function Reducer(state = initialState, action) {

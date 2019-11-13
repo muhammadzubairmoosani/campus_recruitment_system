@@ -22,7 +22,8 @@ export default class Middleware {
         return dispatch => {
             firebase
                 .auth()
-                .signOut(res => console.log(res))
+                .signOut()
+                .then(res => console.log(res))
         }
     }
 

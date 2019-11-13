@@ -4,37 +4,52 @@ import { connect } from 'react-redux';
 import Middleware from '../../store/middleware';
 import { Link } from 'react-router-dom';
 
+let w = window.screen.availWidth
+
+const styles = {
+    position: 'absolute',
+    left: w / 2.5,
+    minWidth: '250px',
+    textAlign: 'center',
+}
+
 class NavigationBar extends React.Component {
     componentDidMount() {
-        this.props.userStatusDispatch()
+        this.props.userStatusDispatch();
     }
     render() {
         const {
             user,
-            signOutDispatch
+            signOutDispatch,
+            // message
         } = this.props;
+        console.log(user)
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
 
-                <div className='fixed-top right-0 left-0'>
-                    <Alert variant='primary'>Successfully!</Alert>
-                </div>
+                {/* message box */}
+                {/* <div>
+                    <Alert variant='primary'>{message}</Alert>
+                </div> */}
+                {/* message box */}
+
                 <Navbar.Brand href="#home">Recruitment System</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        {user.uid === '2k1bWXTr07VT15IVIh5pcxI8v5w1' && user.email === 'zubair@gmail.com' ?
-                            <NavDropdown title="View" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Students</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Companies</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item
-                                    onClick={() => signOutDispatch()}
-                                >Sign Out
+                        {
+                            user && user.uid === '2k1bWXTr07VT15IVIh5pcxI8v5w1' && user.email === 'zubair@gmail.com' ?
+                                <NavDropdown title="View" id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="#action/3.1">Students</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.2">Companies</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item
+                                        onClick={() => signOutDispatch()}
+                                    >Sign Out
                                 </NavDropdown.Item>
-                            </NavDropdown>
-                            : null
+                                </NavDropdown>
+                                : null
                         }
                     </Nav>
                     {/* <Nav.Link href="#home">Home</Nav.Link>
@@ -57,7 +72,8 @@ class NavigationBar extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        user: state.reducer.user
+        user: state.reducer.user,
+        // message: state.reducer.message
     }
 }
 function mapDispatchToProps(dispatch) {

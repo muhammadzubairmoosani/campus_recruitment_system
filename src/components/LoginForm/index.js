@@ -76,6 +76,7 @@ class LoginForm extends React.Component {
                             <Link
                                 to={accountType === 'Student' ? '/studentSignUp' : '/companySignUp'}
                                 className="dark-grey-text font-weight-bold ml-1"
+                                accountType={accountType}
                             >
                                 Sign up
                             </Link>
