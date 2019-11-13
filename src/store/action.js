@@ -1,5 +1,7 @@
 import {
-    ACCOUNT_TYPE
+    ACCOUNT_TYPE,
+    LOGIN,
+    LOGIN_STATUS
 } from './constants';
 
 export default class Action {
@@ -7,5 +9,12 @@ export default class Action {
         return { type: ACCOUNT_TYPE, payload: data }
     }
 
+    static login(data) {
+        return { type: LOGIN, payload: data }
+    }
+
+    static userLoginStatus(data) {
+        return { type: LOGIN_STATUS, payload: data }
+    }
 
 }
