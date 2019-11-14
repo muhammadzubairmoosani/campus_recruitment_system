@@ -8,16 +8,19 @@ class CompanySignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: this.props.accountType,
+            accountType: 'Company',
             companyName: '',
             HRname: '',
             email: '',
             password: '',
             mobile: '',
             discription: '',
-            address: ''
+            address: '',
+            posts: ''
         }
     }
+    _onChange = (key, value) => this.setState({ [key]: value });
+
     render() {
         const { signUpDispatch } = this.props;
         return (
@@ -28,31 +31,31 @@ class CompanySignUp extends React.Component {
                  </h3>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control placeholder="Company name" />
+                            <Form.Control placeholder="Company name" onChange={(text) => this._onChange('companyName', text.target.value)} />
                         </Col>
                         <Col>
-                            <Form.Control placeholder="HR Name" />
-                        </Col>
-                    </Form.Row>
-                    <Form.Row className='my-3'>
-                        <Col>
-                            <Form.Control placeholder="Email" />
-                        </Col>
-                        <Col>
-                            <Form.Control placeholder="Password" />
-                        </Col>
-                        <Col>
-                            <Form.Control placeholder="Mobile" />
+                            <Form.Control placeholder="HR Name" onChange={(text) => this._onChange('HRname', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control placeholder="Description" />
+                            <Form.Control placeholder="Email" onChange={(text) => this._onChange('email', text.target.value)} />
+                        </Col>
+                        <Col>
+                            <Form.Control placeholder="Password" onChange={(text) => this._onChange('password', text.target.value)} />
+                        </Col>
+                        <Col>
+                            <Form.Control placeholder="Mobile" onChange={(text) => this._onChange('mobile', text.target.value)} />
+                        </Col>
+                    </Form.Row>
+                    <Form.Row className='my-3'>
+                        <Col>
+                            <Form.Control placeholder="Description" onChange={(text) => this._onChange('discription', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='mb-3'>
                         <Col>
-                            <Form.Control placeholder="Address" />
+                            <Form.Control placeholder="Address" onChange={(text) => this._onChange('address', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='mb-3'>
@@ -70,7 +73,7 @@ class CompanySignUp extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        accountType: state.reducer.accountType,
+        // accountType: state.reducer.accountType,
     }
 }
 

@@ -1,6 +1,7 @@
 import {
     ACCOUNT_TYPE,
-    LOGIN,
+    LOG_IN,
+    SIGN_UP,
     LOGIN_STATUS
 } from './constants';
 
@@ -9,8 +10,12 @@ export default class Action {
         return { type: ACCOUNT_TYPE, payload: data }
     }
 
-    static login(data) {
-        return { type: LOGIN, payload: data }
+    static signInSuccess(data) {
+        return { type: LOG_IN, payload: data }
+    }
+
+    static signUpSuccess(data) {
+        return { type: SIGN_UP, payload: data }
     }
 
     static userLoginStatus(data) {

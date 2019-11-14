@@ -61,7 +61,7 @@ class LoginForm extends React.Component {
                                 type="button"
                                 className="btn-block z-depth-2"
                                 onClick={() => {
-                                    const data = { email, password }
+                                    const data = { email, password, accountType }
                                     loginDispatch(data)
                                 }}
                             >

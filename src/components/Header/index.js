@@ -14,14 +14,29 @@ const styles = {
 }
 
 class NavigationBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            accountType: this.props.accountType
+
+        }
+    }
     componentDidMount() {
         this.props.userStatusDispatch();
     }
+
+    // forceUpdate() {
+    //     this.setState({ accountType: this.props.accountType })
+    //     // console.log(this.state.accountType)
+    //     console.log('===== hello')
+    // }
+
     render() {
         const {
             user,
             signOutDispatch,
-            // message
+            // message,
+            accountType
         } = this.props;
         console.log(user)
         return (
@@ -49,11 +64,28 @@ class NavigationBar extends React.Component {
                                     >Sign Out
                                 </NavDropdown.Item>
                                 </NavDropdown>
-                                : null
+                                : user.accountType === 'Student' ?
+                                    <NavDropdown title="View" id="basic-nav-dropdown">
+                                        <NavDropdown.Item href="#action/3.2">Companies</NavDropdown.Item>
+                                        <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
+                                        <NavDropdown.Item href="#action/3.2">Profile</NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item onClick={() => signOutDispatch()}>Sign Out</NavDropdown.Item>
+                                    </NavDropdown>
+                                    : this.state.accountType === 'Company' ?
+                                        <>
+                                            <NavDropdown title="View" id="basic-nav-dropdown">
+                                                <NavDropdown.Item href="#action/3.2">Job Application</NavDropdown.Item>
+                                                <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
+                                                <NavDropdown.Divider />
+                                                <NavDropdown.Item onClick={() => signOutDispatch()}>Sign Out</NavDropdown.Item>
+                                            </NavDropdown>
+                                            <Nav.Link href="#home">Add New Post</Nav.Link>
+                                        </>
+                                        : <p>hello</p>
                         }
-                    </Nav>
-                    {/* <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+
+                        {/* <Nav.Link href="#link">Link</Nav.Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -61,6 +93,7 @@ class NavigationBar extends React.Component {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown> */}
+                    </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                         <Button variant="outline-success">Search</Button>
@@ -73,6 +106,8 @@ class NavigationBar extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
+        // reducer: state.reducer,
+        // accountType: state.reducer.accountType,
         // message: state.reducer.message
     }
 }

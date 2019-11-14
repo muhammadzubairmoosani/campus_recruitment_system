@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 import { Form, Col, Button } from 'react-bootstrap'
 import Middleware from "../../store/middleware";
 
-
 class StudentSignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            accountType: this.props.accountType,
+            accountType: 'Student',
             name: '',
             rollNo: '',
             gender: '',
@@ -24,6 +23,9 @@ class StudentSignUp extends React.Component {
             otherSkills: ''
         }
     }
+
+    _onChange = (key, value) => this.setState({ [key]: value });
+
     render() {
         const { signUpDispatch } = this.props;
         return (
@@ -34,32 +36,45 @@ class StudentSignUp extends React.Component {
                  </h3>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control placeholder="Full name" />
+                            <Form.Control placeholder="Full name" onChange={(text) => this._onChange('name', text.target.value)} />
                         </Col>
                         <Col>
-                            <Form.Control placeholder="Roll No" />
+                            <Form.Control placeholder="Roll No" onChange={(text) => this._onChange('rollNo', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row>
                         <Col className='d-flex'>
-                            <Form.Check className='mx-5' type="radio" label="Male" name='gender' />
-                            <Form.Check type="radio" label="Female" name='gender' />
+                            <Form.Check
+                                className='mx-5'
+                                type="radio"
+                                label="Male"
+                                name='gender'
+                                value='male'
+                                onChange={(text) => this._onChange('gender', text.target.value)}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="Female"
+                                name='gender'
+                                value='female'
+                                onChange={(text) => this._onChange('gender', text.target.value)}
+                            />
                         </Col>
                         <Col>
-                            <Form.Control placeholder="Mobile" />
+                            <Form.Control placeholder="Mobile" onChange={(text) => this._onChange('mobile', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control placeholder="Age" />
+                            <Form.Control placeholder="Age" onChange={(text) => this._onChange('age', text.target.value)} />
                         </Col>
                         <Col>
-                            <Form.Control placeholder="University" />
+                            <Form.Control placeholder="University" onChange={(text) => this._onChange('university', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control as="select">
+                            <Form.Control as="select" onChange={(text) => this._onChange('Branch', text.target.value)}>
                                 <option>Select Branch...</option>
                                 <option>Arts</option>
                                 <option>BCA</option>
@@ -70,25 +85,25 @@ class StudentSignUp extends React.Component {
                             </Form.Control>
                         </Col>
                         <Col>
-                            <Form.Control placeholder="Marks" />
+                            <Form.Control placeholder="Marks" onChange={(text) => this._onChange('marks', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control placeholder="Email" />
+                            <Form.Control placeholder="Email" onChange={(text) => this._onChange('email', text.target.value)} />
                         </Col>
                         <Col>
-                            <Form.Control placeholder="Password" />
+                            <Form.Control placeholder="Password" onChange={(text) => this._onChange('password', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='my-3'>
                         <Col>
-                            <Form.Control placeholder="Address" />
+                            <Form.Control placeholder="Address" onChange={(text) => this._onChange('address', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='mb-3'>
                         <Col>
-                            <Form.Control placeholder="Other Skills" />
+                            <Form.Control placeholder="Other Skills" onChange={(text) => this._onChange('otherSkills', text.target.value)} />
                         </Col>
                     </Form.Row>
                     <Form.Row className='mb-3'>
@@ -105,7 +120,7 @@ class StudentSignUp extends React.Component {
 };
 function mapStateToProps(state) {
     return {
-        accountType: state.reducer.accountType,
+        // accountType: state.reducer.accountType,
     }
 }
 function mapDispatchToProps(dispatch) {

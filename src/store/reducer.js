@@ -1,6 +1,7 @@
 import {
     ACCOUNT_TYPE,
-    LOGIN,
+    LOG_IN,
+    SIGN_UP,
     LOGIN_STATUS
 } from './constants';
 
@@ -18,10 +19,12 @@ export default function Reducer(state = initialState, action) {
                 accountType: action.payload,
             };
         case LOGIN_STATUS:
-        case LOGIN:
+        case LOG_IN:
+        case SIGN_UP:
             return {
                 ...state,
                 user: action.payload,
+                // accountType: action.payload.accountType
             };
 
         default:

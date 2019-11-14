@@ -1,6 +1,7 @@
 
 export const ACCOUNT_TYPE = 'ACCOUNT_TYPE';
-export const LOGIN = 'LOGIN';
+export const LOG_IN = 'LOG_IN';
 export const LOGIN_STATUS = 'LOGIN_STATUS';
+export const SIGN_UP = 'SIGN_UP';
 
 
