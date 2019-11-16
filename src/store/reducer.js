@@ -8,7 +8,8 @@ import {
 const initialState = {
     accountType: '',
     user: {},
-    // message: ''
+    // message: '',
+    companies: []
 }
 
 export default function Reducer(state = initialState, action) {
@@ -24,7 +25,6 @@ export default function Reducer(state = initialState, action) {
             return {
                 ...state,
                 user: action.payload,
-                // accountType: action.payload.accountType
             };
 
         default:

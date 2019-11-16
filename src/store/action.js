@@ -18,7 +18,7 @@ export default class Action {
         return { type: SIGN_UP, payload: data }
     }
 
-    static userLoginStatus(data) {
+    static userLoginStatus(...data) {
         return { type: LOGIN_STATUS, payload: data }
     }
 

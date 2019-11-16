@@ -13,6 +13,10 @@ const styles = {
     textAlign: 'center',
 }
 
+const linkStyle = {
+    color: '#212529',
+    textDecoration: 'none'
+}
 class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +28,9 @@ class NavigationBar extends React.Component {
     componentDidMount() {
         this.props.userStatusDispatch();
     }
+
+
+
 
     // forceUpdate() {
     //     this.setState({ accountType: this.props.accountType })
@@ -38,7 +45,8 @@ class NavigationBar extends React.Component {
             // message,
             accountType
         } = this.props;
-        console.log(user)
+        // console.log(user)
+        // console.log(Object.values(user).accountType)
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
 
@@ -53,7 +61,7 @@ class NavigationBar extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         {
-                            user && user.uid === '2k1bWXTr07VT15IVIh5pcxI8v5w1' && user.email === 'zubair@gmail.com' ?
+                            user[0] && user[0].accountType === 'Admin' ?
                                 <NavDropdown title="View" id="basic-nav-dropdown">
                                     <NavDropdown.Item href="#action/3.1">Students</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.2">Companies</NavDropdown.Item>
@@ -64,7 +72,7 @@ class NavigationBar extends React.Component {
                                     >Sign Out
                                 </NavDropdown.Item>
                                 </NavDropdown>
-                                : user.accountType === 'Student' ?
+                                : user[0] && user[0].accountType === 'Student' ?
                                     <NavDropdown title="View" id="basic-nav-dropdown">
                                         <NavDropdown.Item href="#action/3.2">Companies</NavDropdown.Item>
                                         <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
@@ -72,27 +80,27 @@ class NavigationBar extends React.Component {
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={() => signOutDispatch()}>Sign Out</NavDropdown.Item>
                                     </NavDropdown>
-                                    : this.state.accountType === 'Company' ?
+                                    : user[0] && user[0].accountType === 'Company' ?
                                         <>
                                             <NavDropdown title="View" id="basic-nav-dropdown">
                                                 <NavDropdown.Item href="#action/3.2">Job Application</NavDropdown.Item>
                                                 <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
+                                                {/* <Link to='viewPosts' style={linkStyle}> */}
+                                                <NavDropdown.Item to='viewPosts'>
+                                                    Posts
+                                                </NavDropdown.Item>
+                                                {/* </Link> */}
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item onClick={() => signOutDispatch()}>Sign Out</NavDropdown.Item>
                                             </NavDropdown>
-                                            <Nav.Link href="#home">Add New Post</Nav.Link>
+                                            <Nav.Link to='addNewPost'>
+                                                {/* <Link to='addNewPost'> */}
+                                                    Add New Post
+                                            {/* </Link> */}
+                                            </Nav.Link>
                                         </>
-                                        : <p>hello</p>
+                                        : null
                         }
-
-                        {/* <Nav.Link href="#link">Link</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown> */}
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -117,6 +125,5 @@ function mapDispatchToProps(dispatch) {
         signOutDispatch: () => dispatch(Middleware.signOut())
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

@@ -4,7 +4,8 @@ import Cards from './components/Cards';
 import LoginForm from './components/LoginForm';
 import StudentSignUp from './components/StudentSignUpForm';
 import CompanySignUp from './components/CompanySignUpForm';
-// import Sidebar from './components/UserDeshboard';
+import CompaniesTable from './components/student/viewCompanies';
+import AddNewPost from './components/AddPostForm';
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -17,7 +18,8 @@ class App extends React.Component {
         <Route exact path='/login' component={LoginForm} />
         <Route exact path='/studentSignUp' component={StudentSignUp} />
         <Route exact path='/companySignUp' component={CompanySignUp} />
-        {/* <Route exact path='/deshBoard' component={Sidebar} /> */}
+        <Route exact path='/jobs' component={CompaniesTable} />
+        <Route exact path='/addNewPost' component={AddNewPost} />
       </Router>
     )
   }
