@@ -5,8 +5,6 @@ import {
     LOGIN_STATUS,
     VACANCIES
 } from './constants';
-import { Redirect } from 'react-router-dom';
-import React, { Component } from 'react';
 
 const initialState = {
     accountType: '',

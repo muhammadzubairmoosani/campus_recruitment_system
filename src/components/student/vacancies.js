@@ -1,9 +1,9 @@
 import React from 'react';
 import { Accordion, Card, Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Middleware from '../../../store/middleware';
+import Middleware from '../../store/middleware';
 
-class Jobs extends React.Component {
+class Vacancies extends React.Component {
     componentDidMount() {
         this.props.getdata()
     }
@@ -11,7 +11,6 @@ class Jobs extends React.Component {
         const { vacancies } = this.props;
         let jobs = Object.values(vacancies);
         let count = 0;
-        console.log(vacancies)
         return (
             <Accordion defaultActiveKey={0}>
                 {jobs.length && jobs.map(item => {
@@ -42,7 +41,6 @@ class Jobs extends React.Component {
                                 </tbody>
                             </Table>
                         </Card.Header>
-                        {}
                         <Accordion.Collapse eventKey={count++}>
                             {item.posts.length && item.posts.map(i => {
                                 return <Card.Body>
@@ -89,4 +87,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Jobs);
+export default connect(mapStateToProps, mapDispatchToProps)(Vacancies);

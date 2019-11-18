@@ -8,6 +8,24 @@ export default class Middleware {
         }
     }
 
+    static profileUpdate(data) {
+        return dispatch => {
+            delete data[0].flag
+            if (data[0].accountType === 'Student') {
+                firebase
+                    .database()
+                    .ref(`students/${data[1]}`)
+                    .set(data[0])
+            }
+            else if (data[0].accountType === 'Company') {
+                firebase
+                    .database()
+                    .ref(`companies/${data[1]}`)
+                    .set(data[0])
+            }
+        }
+    }
+
     static getVacancies() {
         return dispatch => {
             firebase
@@ -18,8 +36,9 @@ export default class Middleware {
     }
 
     static addNewPost(data) {
-        let key = data.key
-        delete data.key
+        let key = data.key;
+        delete data.key;
+        delete data.flag;
         let count = 0;
         return dispatch => {
             firebase
@@ -105,7 +124,7 @@ export default class Middleware {
 
     static userStatus() {
         return dispatch => {
-            let loginUser = {};
+            let loginUser = [];
             firebase
                 .auth()
                 .onAuthStateChanged(user => {

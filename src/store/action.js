@@ -25,5 +25,4 @@ export default class Action {
     static vacancies(data) {
         return { type: VACANCIES, payload: data }
     }
-
 }
