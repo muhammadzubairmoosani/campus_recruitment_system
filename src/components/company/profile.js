@@ -97,5 +97,4 @@ function mapDispatchToProps(dispatch) {
         updateDispatch: (data) => dispatch(Middleware.profileUpdate(data))
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

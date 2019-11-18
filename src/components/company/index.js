@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Tab, Row, Col, Nav } from 'react-bootstrap';
+import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import JobApplications from './jobApplications';
 import Notifications from './notifications';
 import Profile from './profile';
@@ -47,7 +47,6 @@ export default class CompanyDeshboard extends React.Component {
                             <Tab.Pane eventKey="fifth">
                                 <AddNewPost />
                             </Tab.Pane>
-
                         </Tab.Content>
                     </Col>
                 </Row>

@@ -8,6 +8,18 @@ export default class Middleware {
         }
     }
 
+    static deletePost(data) {
+        return dispatch => {
+            console.log(data)
+            firebase
+                .database()
+                .ref(`companies/${data[1]}/posts/${data[0]}`)
+                .remove()
+                .then(res => console.log('delete successfully!'))
+                .catch(err => console.log(err))
+        }
+    }
+
     static profileUpdate(data) {
         return dispatch => {
             delete data[0].flag
