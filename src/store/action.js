@@ -2,7 +2,8 @@ import {
     ACCOUNT_TYPE,
     LOG_IN,
     SIGN_UP,
-    LOGIN_STATUS
+    LOGIN_STATUS,
+    VACANCIES
 } from './constants';
 
 export default class Action {
@@ -20,6 +21,9 @@ export default class Action {
 
     static userLoginStatus(...data) {
         return { type: LOGIN_STATUS, payload: data }
+    }
+    static vacancies(data) {
+        return { type: VACANCIES, payload: data }
     }
 
 }

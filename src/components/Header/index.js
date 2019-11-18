@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, NavDropdown, FormControl, Form, Button, Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Middleware from '../../store/middleware';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 let w = window.screen.availWidth
 
@@ -21,32 +21,25 @@ class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            accountType: this.props.accountType
+            accountType: this.props.accountType,
+            color: '#969797'
 
         }
     }
+
     componentDidMount() {
         this.props.userStatusDispatch();
     }
-
-
-
-
-    // forceUpdate() {
-    //     this.setState({ accountType: this.props.accountType })
-    //     // console.log(this.state.accountType)
-    //     console.log('===== hello')
-    // }
 
     render() {
         const {
             user,
             signOutDispatch,
+            path,
             // message,
             accountType
         } = this.props;
         // console.log(user)
-        // console.log(Object.values(user).accountType)
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
 
@@ -71,6 +64,7 @@ class NavigationBar extends React.Component {
                                         onClick={() => signOutDispatch()}
                                     >Sign Out
                                 </NavDropdown.Item>
+                                    <Redirect to='dashboard' />
                                 </NavDropdown>
                                 : user[0] && user[0].accountType === 'Student' ?
                                     <NavDropdown title="View" id="basic-nav-dropdown">
@@ -79,25 +73,31 @@ class NavigationBar extends React.Component {
                                         <NavDropdown.Item href="#action/3.2">Profile</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={() => signOutDispatch()}>Sign Out</NavDropdown.Item>
+                                        <Redirect to='jobs' />
                                     </NavDropdown>
                                     : user[0] && user[0].accountType === 'Company' ?
                                         <>
                                             <NavDropdown title="View" id="basic-nav-dropdown">
                                                 <NavDropdown.Item href="#action/3.2">Job Application</NavDropdown.Item>
                                                 <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
-                                                {/* <Link to='viewPosts' style={linkStyle}> */}
-                                                <NavDropdown.Item to='viewPosts'>
-                                                    Posts
+                                                <NavDropdown.Item>
+                                                    <Nav><Link to='viewPosts'>Posts</Link></Nav>
                                                 </NavDropdown.Item>
-                                                {/* </Link> */}
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item onClick={() => signOutDispatch()}>Sign Out</NavDropdown.Item>
                                             </NavDropdown>
-                                            <Nav.Link to='addNewPost'>
-                                                {/* <Link to='addNewPost'> */}
-                                                    Add New Post
-                                            {/* </Link> */}
-                                            </Nav.Link>
+                                            <Nav>
+                                                <Nav.Link>
+                                                    <Link
+                                                        to='addNewPost'
+                                                        style={{ color: this.state.color, textDecoration: 'none' }}
+                                                        onMouseOver={() => this.setState({ color: 'rgba(0,0,0,.5)' })}
+                                                        onMouseOut={() => this.setState({ color: '#969797' })}
+                                                    >  Add New Post
+                                                    </Link>
+                                                </Nav.Link>
+                                            </Nav>
+                                            <Redirect to='addNewPost' />
                                         </>
                                         : null
                         }
@@ -114,6 +114,7 @@ class NavigationBar extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
+        path: state.reducer.path,
         // reducer: state.reducer,
         // accountType: state.reducer.accountType,
         // message: state.reducer.message

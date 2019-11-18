@@ -2,14 +2,18 @@ import {
     ACCOUNT_TYPE,
     LOG_IN,
     SIGN_UP,
-    LOGIN_STATUS
+    LOGIN_STATUS,
+    VACANCIES
 } from './constants';
+import { Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
 
 const initialState = {
     accountType: '',
     user: {},
     // message: '',
-    companies: []
+    companies: [],
+    vacancies: {}
 }
 
 export default function Reducer(state = initialState, action) {
@@ -25,6 +29,11 @@ export default function Reducer(state = initialState, action) {
             return {
                 ...state,
                 user: action.payload,
+            };
+        case VACANCIES:
+            return {
+                ...state,
+                vacancies: action.payload,
             };
 
         default:

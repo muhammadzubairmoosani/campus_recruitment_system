@@ -21,7 +21,7 @@ class Cards extends React.Component {
                                 variant="primary px-4"
                                 onClick={() => accountTypeDispatch('Student')}
                             >
-                                Login
+                                SignIn
                         </Button>
                         </Link>
                     </Card.Body>
@@ -34,7 +34,7 @@ class Cards extends React.Component {
                             <Button
                                 variant="primary px-4"
                                 onClick={() => accountTypeDispatch('Company')}
-                            >Login</Button>
+                            >SignIn</Button>
                         </Link>
                     </Card.Body>
                 </Card>
@@ -46,7 +46,7 @@ class Cards extends React.Component {
                             <Button
                                 variant="primary px-4"
                                 onClick={() => accountTypeDispatch('Admin')}
-                            >Login</Button>
+                            >SignIn</Button>
                         </Link>
                     </Card.Body>
                 </Card>

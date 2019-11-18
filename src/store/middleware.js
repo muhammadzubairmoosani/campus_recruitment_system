@@ -8,6 +8,15 @@ export default class Middleware {
         }
     }
 
+    static getVacancies() {
+        return dispatch => {
+            firebase
+                .database()
+                .ref('companies')
+                .on('value', snapshot => dispatch(Action.vacancies(snapshot.val())))
+        }
+    }
+
     static addNewPost(data) {
         let key = data.key
         delete data.key
@@ -15,7 +24,7 @@ export default class Middleware {
         return dispatch => {
             firebase
                 .database()
-                .ref(`companies`)
+                .ref('companies')
                 .on('value', res => {
                     if (res) {
                         Object.keys(res.val()).filter((i, index) => {
@@ -77,13 +86,6 @@ export default class Middleware {
                     const user = {
                         res,
                         accountType: data.accountType
-                    }
-                    if (data.accountType == 'Student') {
-                        window.location.replace('/jobs')
-                    } else if (data.accountType == 'Company') {
-                        window.location.replace('/jobApplications')
-                    } else {
-                        window.location.replace('/dashboard')
                     }
                     dispatch(Action.signInSuccess(user))
                 })
