@@ -3,7 +3,8 @@ import {
     LOG_IN,
     SIGN_UP,
     LOGIN_STATUS,
-    VACANCIES
+    VACANCIES,
+    // MESSAGE
 } from './constants';
 
 const initialState = {
@@ -22,7 +23,7 @@ export default function Reducer(state = initialState, action) {
                 accountType: action.payload,
             };
         case LOGIN_STATUS:
-        case LOG_IN:
+        // case LOG_IN:
         case SIGN_UP:
             return {
                 ...state,
@@ -33,6 +34,11 @@ export default function Reducer(state = initialState, action) {
                 ...state,
                 vacancies: action.payload,
             };
+        // case LOG_IN:
+        //     return {
+        //         ...state,
+        //         message: action.payload,
+        //     };
 
         default:
             return state;

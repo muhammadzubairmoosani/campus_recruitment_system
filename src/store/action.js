@@ -11,6 +11,9 @@ export default class Action {
         return { type: ACCOUNT_TYPE, payload: data }
     }
 
+    // static signInSuccess(...data) {
+    //     return { type: LOG_IN, payload: data }
+    // }
     static signInSuccess(data) {
         return { type: LOG_IN, payload: data }
     }

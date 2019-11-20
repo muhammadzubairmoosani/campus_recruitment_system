@@ -10,7 +10,6 @@ export default class Middleware {
 
     static deletePost(data) {
         return dispatch => {
-            console.log(data)
             firebase
                 .database()
                 .ref(`companies/${data[1]}/posts/${data[0]}`)
@@ -18,6 +17,18 @@ export default class Middleware {
                 .then(res => console.log('delete successfully!'))
                 .catch(err => console.log(err))
         }
+    }
+
+    static updatePost(data) {
+        return dispatch => {
+            firebase
+                .database()
+                .ref(`companies/${data[1]}/posts`)
+                .set(data[0])
+                .then(res => console.log('update successfully!'))
+                .catch(err => console.log(err))
+        }
+
     }
 
     static profileUpdate(data) {
@@ -86,11 +97,11 @@ export default class Middleware {
                             .ref('students')
                             .push(data)
                             .then(res => {
-                                let user = {
-                                    data,
-                                    accountType: data.accountType
-                                }
-                                dispatch(Action.signUpSuccess(user))
+                                // let user = {
+                                //     data,
+                                //     accountType: data.accountType
+                                // }
+                                dispatch(Action.signUpSuccess([data, data.accountType]))
                             })
                             .catch(err => console.log(err))
                     }
@@ -108,21 +119,34 @@ export default class Middleware {
         }
     }
 
+    // static Login(data) {
+    //     return dispatch => {
+    //         firebase
+    //             .auth()
+    //             .signInWithEmailAndPassword(data.email, data.password)
+    //             .then(res => {
+    //                 // const user = {
+    //                 //     res,
+    //                 //     accountType: data.accountType
+    //                 // }
+    //                 dispatch(Action.signInSuccess(res,data.accountType))
+    //             })
+    //             .catch(err => console.log(err))
+    //     }
+    // }
+
     static Login(data) {
         return dispatch => {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(data.email, data.password)
-                .then(res => {
-                    const user = {
-                        res,
-                        accountType: data.accountType
-                    }
-                    dispatch(Action.signInSuccess(user))
-                })
+                .then(() => dispatch(Action.signInSuccess('signIn successfully!')))
                 .catch(err => console.log(err))
         }
     }
+
+
+
 
     static signOut() {
         return dispatch => {

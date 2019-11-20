@@ -20,23 +20,42 @@ class Profile extends React.Component {
         }
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.user !== this.props.user) {
+        const { user } = this.props
+        // console.log('stdProfil', user)
+        // if (prevProps.user === user && user.data) {
+        //     this.setState({
+        //         name: user.data.name,
+        //         email: user.data.email,
+        //         mobile: user.data.mobile,
+        //         gender: user.data.gender,
+        //         marks: user.data.marks,
+        //         branch: user.data.branch,
+        //         university: user.data.university,
+        //         address: user.data.address,
+        //         otherSkills: user.data.otherSkills,
+        //         rollNo: user.data.rollNo,
+        //         accountType: user.data.accountType,
+        //         password: user.data.password,
+        //     })
+        // }
+        if (prevProps.user !== user) {
             this.setState({
-                name: this.props.user[0].name,
-                email: this.props.user[0].email,
-                mobile: this.props.user[0].mobile,
-                gender: this.props.user[0].gender,
-                marks: this.props.user[0].marks,
-                branch: this.props.user[0].branch,
-                university: this.props.user[0].university,
-                address: this.props.user[0].address,
-                otherSkills: this.props.user[0].otherSkills,
-                rollNo: this.props.user[0].rollNo,
-                accountType: this.props.user[0].accountType,
-                password: this.props.user[0].password,
+                name: user[0].name,
+                email: user[0].email,
+                mobile: user[0].mobile,
+                gender: user[0].gender,
+                marks: user[0].marks,
+                branch: user[0].branch,
+                university: user[0].university,
+                address: user[0].address,
+                otherSkills: user[0].otherSkills,
+                rollNo: user[0].rollNo,
+                accountType: user[0].accountType,
+                password: user[0].password,
             })
         }
     }
+
     _onChange = (key, value) => this.setState({ [key]: value, flag: false })
     _update = (...data) => {
         this.setState({ flag: true })

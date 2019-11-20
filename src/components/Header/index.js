@@ -39,6 +39,7 @@ class NavigationBar extends React.Component {
             // message,
             accountType
         } = this.props;
+        // console.log('header', user)
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
 

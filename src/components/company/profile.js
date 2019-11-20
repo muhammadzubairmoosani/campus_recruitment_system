@@ -18,17 +18,58 @@ class Profile extends React.Component {
             flag: true
         }
     }
+
+    // componentWillUnmount() {
+    //     console.log("con", this.props)
+    // }
+    // componentDidMount() {
+    //     console.log("con", this.props)
+    //     const { user } = this.props
+    //     console.log("user", user)
+    //     this.setState({ email: user[0] && user[0].email })
+        // console.log('cPro', user)
+        // if (user.length) {
+        //     this.setState({
+        //         companyName: user[0].companyName,
+        //         HRname: user[0].HRname,
+        //         email: user[0].email,
+        //         mobile: user[0].mobile,
+        //         address: user[0].address,
+        //         posts: user[0].posts,
+        //         accountType: user[0].accountType,
+        //         password: user[0].password,
+        //     })
+        // }
+    }
+    // componentWillReceiveProps(nextProps) {
+    //     console.log('nextProps', nextProps.user[0])
+    //     const { user } = nextProps && nextProps.user[0]
+
+    // if (nextProps.user !== user) {
+    // this.setState({
+    //     companyName: user.companyName,
+    //     HRname: user.HRname,
+    //     email: user.email,
+    //     mobile: user.mobile,
+    //     address: user.address,
+    //     posts: user.posts,
+    //     accountType: user.accountType,
+    //     password: user.password,
+    // })
+    //         }
+    // }
     componentDidUpdate(prevProps) {
-        if (prevProps.user !== this.props.user) {
+        const { user } = this.props
+        if (prevProps.user !== user.length) {
             this.setState({
-                companyName: this.props.user[0].companyName,
-                HRname: this.props.user[0].HRname,
-                email: this.props.user[0].email,
-                mobile: this.props.user[0].mobile,
-                address: this.props.user[0].address,
-                posts: this.props.user[0].posts,
-                accountType: this.props.user[0].accountType,
-                password: this.props.user[0].password,
+                companyName: user[0].companyName,
+                HRname: user[0].HRname,
+                email: user[0].email,
+                mobile: user[0].mobile,
+                address: user[0].address,
+                posts: user[0].posts,
+                accountType: user[0].accountType,
+                password: user[0].password,
             })
         }
     }
@@ -88,6 +129,8 @@ class Profile extends React.Component {
     }
 }
 function mapStateToProps(state) {
+    console.log("state", state)
+
     return {
         user: state.reducer.user,
     }
