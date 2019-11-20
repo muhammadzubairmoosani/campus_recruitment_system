@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Col } from 'react-bootstrap';
 import Middleware from '../../store/middleware';
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -21,23 +22,6 @@ class Profile extends React.Component {
     }
     componentDidUpdate(prevProps) {
         const { user } = this.props
-        // console.log('stdProfil', user)
-        // if (prevProps.user === user && user.data) {
-        //     this.setState({
-        //         name: user.data.name,
-        //         email: user.data.email,
-        //         mobile: user.data.mobile,
-        //         gender: user.data.gender,
-        //         marks: user.data.marks,
-        //         branch: user.data.branch,
-        //         university: user.data.university,
-        //         address: user.data.address,
-        //         otherSkills: user.data.otherSkills,
-        //         rollNo: user.data.rollNo,
-        //         accountType: user.data.accountType,
-        //         password: user.data.password,
-        //     })
-        // }
         if (prevProps.user !== user) {
             this.setState({
                 name: user[0].name,
@@ -153,6 +137,7 @@ class Profile extends React.Component {
         );
     }
 }
+
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
@@ -163,5 +148,4 @@ function mapDispatchToProps(dispatch) {
         updateDispatch: (data) => dispatch(Middleware.profileUpdate(data))
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

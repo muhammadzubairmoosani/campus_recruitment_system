@@ -8,6 +8,17 @@ export default class Middleware {
         }
     }
 
+    static jobApply(data) {
+        return dispatch => {
+            firebase
+                .database()
+                .ref(`companies/${data[0]}/posts/${data[3]}/appliedStudents`)
+                .push(data[2])
+                .then(() => console.log('Apply Successfully!'))
+                .catch(err => console.log(err))
+        }
+    }
+
     static deletePost(data) {
         return dispatch => {
             firebase
