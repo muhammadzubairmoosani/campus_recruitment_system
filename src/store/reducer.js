@@ -4,6 +4,7 @@ import {
     SIGN_UP,
     LOGIN_STATUS,
     VACANCIES,
+    COMPANIES_AND_STUDENTS,
     // MESSAGE
 } from './constants';
 
@@ -12,7 +13,8 @@ const initialState = {
     user: {},
     // message: '',
     companies: [],
-    vacancies: {}
+    vacancies: {},
+    allAccounts: {}
 }
 
 export default function Reducer(state = initialState, action) {
@@ -21,6 +23,11 @@ export default function Reducer(state = initialState, action) {
             return {
                 ...state,
                 accountType: action.payload,
+            };
+        case COMPANIES_AND_STUDENTS:
+            return {
+                ...state,
+                allAccounts: action.payload,
             };
         case LOGIN_STATUS:
         // case LOG_IN:

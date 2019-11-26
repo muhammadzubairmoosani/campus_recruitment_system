@@ -3,12 +3,17 @@ import {
     LOG_IN,
     SIGN_UP,
     LOGIN_STATUS,
-    VACANCIES
+    VACANCIES,
+    COMPANIES_AND_STUDENTS
 } from './constants';
 
 export default class Action {
     static type(data) {
         return { type: ACCOUNT_TYPE, payload: data }
+    }
+
+    static companiesAndStudents(...data) {
+        return { type: COMPANIES_AND_STUDENTS, payload: data }
     }
 
     // static signInSuccess(...data) {
@@ -25,6 +30,7 @@ export default class Action {
     static userLoginStatus(...data) {
         return { type: LOGIN_STATUS, payload: data }
     }
+
     static vacancies(data) {
         return { type: VACANCIES, payload: data }
     }

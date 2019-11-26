@@ -25,7 +25,7 @@ class Vacancies extends React.Component {
         keys = Object.keys(vacancies);
         return (
             <Accordion>
-                {jobs.length && jobs.map((item, index) => {
+                {!!jobs.length && jobs.map((item, index) => {
                     return <Card>
                         <Card.Header>
                             <Table striped bordered>

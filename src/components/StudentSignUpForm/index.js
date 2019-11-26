@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Form, Col, Button } from 'react-bootstrap'
 import Middleware from "../../store/middleware";
 
@@ -15,7 +15,7 @@ class StudentSignUp extends React.Component {
             mobile: '',
             age: '',
             university: '',
-            Branch: '',
+            branch: '',
             marks: '',
             email: '',
             password: '',
@@ -118,15 +118,15 @@ class StudentSignUp extends React.Component {
         );
     }
 };
-function mapStateToProps(state) {
-    return {
-        // accountType: state.reducer.accountType,
-    }
-}
+// function mapStateToProps(state) {
+//     return {
+//         // accountType: state.reducer.accountType,
+//     }
+// }
 function mapDispatchToProps(dispatch) {
     return {
         signUpDispatch: data => dispatch(Middleware.signUp(data))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudentSignUp);
+export default connect(null, mapDispatchToProps)(StudentSignUp);

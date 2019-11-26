@@ -12,11 +12,17 @@ class PrevPosts extends React.Component {
             text: 'Edit'
         }
     }
+
     componentDidUpdate(prevProps) {
         if (prevProps.user !== this.props.user && this.props.user.length) {
             this.setState({ posts: this.props.user[0].posts })
         }
     }
+    
+    componentDidMount() {
+        this.props.userStatusDispatch()
+    }
+
     _onChange = (key, value, index) => {
         let posts = [...this.state.posts];
         posts[index][key] = value;
@@ -49,7 +55,7 @@ class PrevPosts extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {posts && posts.length && posts.map((item, index) =>
+                            {posts && !!posts.length && posts.map((item, index) =>
                                 <tr key={index}>
                                     <td>
                                         <Form.Control
@@ -108,7 +114,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         deleteDispatch: (...data) => dispatch(Middleware.deletePost(data)),
-        updateDispatch: (...data) => dispatch(Middleware.updatePost(data))
+        updateDispatch: (...data) => dispatch(Middleware.updatePost(data)),
+        userStatusDispatch: () => dispatch(Middleware.userStatus())
     }
 }
 

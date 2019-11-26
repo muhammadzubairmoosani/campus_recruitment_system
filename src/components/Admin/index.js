@@ -1,12 +1,10 @@
 import React from 'react';
 import { Tab, Row, Col, Nav } from 'react-bootstrap';
-import JobApplications from './jobApplications';
-import Notifications from './notifications';
-import Profile from './profile';
-import AddNewPost from './addNewPost';
-import PrevPosts from './prevPosts';
+// import SendNotification from './sendNotification';
+import Companies from './companies';
+import Students from './students';
 
-export default class CompanyDeshboard extends React.Component {
+export default class AdminDeshboard extends React.Component {
     render() {
         return (
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -14,38 +12,26 @@ export default class CompanyDeshboard extends React.Component {
                     <Col sm={3}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="first">Job Applications</Nav.Link>
+                                <Nav.Link eventKey="first">View Students</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="second">Notifications</Nav.Link>
+                                <Nav.Link eventKey="second">View Companies</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="third">Profile</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="fourth">Previous Posts</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="fifth">Add New Post</Nav.Link>
+                                <Nav.Link eventKey="third">Send Notification</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
-                                <JobApplications />
+                                <Students />
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
-                                <Notifications />
+                                <Companies />
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
-                                <Profile />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="fourth">
-                                <PrevPosts />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="fifth">
-                                <AddNewPost />
+                                {/* <SendNotification /> */}
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

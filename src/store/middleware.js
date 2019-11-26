@@ -1,7 +1,51 @@
 import Action from './action';
+// import { firebase, admin } from '../config/config';
 import firebase from '../config/config';
 
 export default class Middleware {
+    static deleteStudent(data) {
+        return dispatch => {
+            console.log(data)
+            // admin
+            // .auth()
+            // .getUserByEmail(data)
+            // .then(user => {
+            //     const uid = user.uid
+            //     admin
+            //     .auth()
+            //     .deleteUser(uid)
+            //     .then(() => console.log('Successfully! delete user'))
+            // })
+
+            // firebase
+            //     .database()
+            //     .ref(`students/${data}`)
+            //     .remove()
+            //     .then(res => console.log('delete successfully!'))
+            //     .catch(err => console.log(err))
+        }
+    }
+
+    static getCompaniesAndStudentsData() {
+        return dispatch => {
+            let students = {};
+            let companies = {};
+            firebase
+                .database()
+                .ref('companies')
+                .on('value', snapshot => {
+                    companies = snapshot.val();
+                    firebase
+                        .database()
+                        .ref('students')
+                        .on('value', snapshot => {
+                            students = snapshot.val()
+                            dispatch(Action.companiesAndStudents(students, companies))
+                        })
+                })
+        }
+    }
+
     static accountType(data) {
         return dispatch => {
             dispatch(Action.type(data))
@@ -102,6 +146,7 @@ export default class Middleware {
                 .auth()
                 .createUserWithEmailAndPassword(data.email, data.password)
                 .then(res => {
+                    delete data.password;
                     if (data.accountType === 'Student') {
                         firebase
                             .database()
@@ -203,6 +248,20 @@ export default class Middleware {
                                     }
                                 })
                                 loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
+                            }
+                        })
+                    firebase
+                        .database()
+                        .ref('Admin')
+                        .on('value', admin => {
+                            if (user) {
+                                let key = ''
+                                for (let i in admin.val()) {
+                                    if (admin.val()[i] === user.email) {
+                                        loginUser = [admin.val()];
+                                        loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
+                                    }
+                                }
                             }
                         })
                 })

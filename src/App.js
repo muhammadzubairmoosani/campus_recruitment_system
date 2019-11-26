@@ -4,12 +4,13 @@ import Cards from './components/Cards';
 import LoginForm from './components/LoginForm';
 import StudentSignUp from './components/StudentSignUpForm';
 import CompanySignUp from './components/CompanySignUpForm';
-import StudentDeshboard from './components/student';
-import CompanyDeshboard from './components/company';
+import StudentDeshboard from './components/Student';
+import CompanyDeshboard from './components/Company';
+import AdminDeshboard from './components/Admin';
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
     return (
       <Router>
@@ -20,9 +21,8 @@ class App extends React.Component {
         <Route exact path='/companySignUp' component={CompanySignUp} />
         <Route exact path='/studentDeshboard' component={StudentDeshboard} />
         <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
+        <Route exact path='/adminDeshboard' component={AdminDeshboard} />
       </Router>
     )
   }
 }
-
-export default App;

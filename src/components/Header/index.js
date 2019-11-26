@@ -35,10 +35,11 @@ class NavigationBar extends React.Component {
         const {
             user,
             signOutDispatch,
-            path,
+            // path,
             // message,
-            accountType
+            // accountType
         } = this.props;
+
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
                 <Navbar.Brand href="#home">Recruitment System</Navbar.Brand>
@@ -49,17 +50,10 @@ class NavigationBar extends React.Component {
                             <>
                                 {
                                     user[0].accountType === 'Admin' ?
-                                        <NavDropdown title="View" id="basic-nav-dropdown">
-                                            <NavDropdown.Item href="#action/3.1">Students</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.2">Companies</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.3">Notifications</NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item
-                                                onClick={() => signOutDispatch()}
-                                            >Sign Out
-                                </NavDropdown.Item>
-                                            <Redirect to='dashboard' />
-                                        </NavDropdown>
+                                        <>
+                                            <Nav.Link onClick={() => signOutDispatch()}>Sign Out</Nav.Link>
+                                            <Redirect to='adminDeshboard' />
+                                        </>
                                         : user[0].accountType === 'Student' ?
                                             <>
                                                 <Nav.Link onClick={() => signOutDispatch()}>Sign Out</Nav.Link>
@@ -87,7 +81,7 @@ class NavigationBar extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
-        path: state.reducer.path,
+        // path: state.reducer.path,
         // message: state.reducer.message
     }
 }
