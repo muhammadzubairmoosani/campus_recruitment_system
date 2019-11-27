@@ -21,14 +21,30 @@ class Companies extends React.Component {
     //     this.props.jobApplyDispatch(companykey, companyIndex, [userKey, this.props.user[0]], jobIndex)
     // }
     render() {
-        const { vacancies, user, allAccounts } = this.props;
+        const { vacancies, user, allAccounts, deleteStudentDispatch } = this.props;
         // let jobs = Object.values(vacancies);
         // keys = Object.keys(vacancies);
         let companies = []
-        for(let i in allAccounts[1]) {
+        let uid = [];
+        for (let i in allAccounts[1]) {
             companies.push(allAccounts[1][i])
+            uid.push(i)
         }
-        
+
+        // let students = [];
+        // for (let i in allAccounts[0]) {
+        //     students.push(allAccounts[0][i])
+        // }
+
+
+
+        const _delete = (index, ACType) => {
+            let selectedUid = uid.filter((item, indx) => indx === index)
+            let accountType = ACType === 'Student' ? 'students' : 'companies'
+            deleteStudentDispatch(accountType, selectedUid[0])
+        }
+
+
         return (
             <Accordion>
                 {!!companies.length && companies.map((item, index) => {
@@ -43,6 +59,7 @@ class Companies extends React.Component {
                                         <th>Contact</th>
                                         <th>Adress</th>
                                         <th>View Posts</th>
+                                        <th>Delete Account</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,6 +78,11 @@ class Companies extends React.Component {
                                             >
                                                 <Button>View</Button>
                                             </Accordion.Toggle>
+                                        </td>
+                                        <td className='text-right'>
+                                            <Button variant='danger'
+                                                onClick={() => _delete(index, item.accountType)}
+                                            >Delete</Button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -81,7 +103,7 @@ class Companies extends React.Component {
                                                 <th>Job Title</th>
                                                 <th>Job Descripion</th>
                                                 <th>Salary</th>
-                                                <th>Delete Post</th>
+                                                {/* <th>Delete Post</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,9 +111,11 @@ class Companies extends React.Component {
                                                 <td>{i.jobTitle}</td>
                                                 <td>{i.description}</td>
                                                 <td>{i.salary}</td>
-                                                <td className='text-right'>
-                                                    <Button variant='danger'>Delete</Button>
-                                                </td>
+                                                {/* <td className='text-right'>
+                                                    <Button variant='danger'
+                                                        onClick={() => _delete(index, item.accountType)}
+                                                    >Delete</Button>
+                                                </td> */}
                                             </tr>
                                         </tbody>
                                     </Table>
@@ -116,6 +140,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getCompaniesDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
         // jobApplyDispatch: (...data) => dispatch(Middleware.jobApply(data))
+        deleteStudentDispatch: (...data) => dispatch(Middleware.deleteAccount(data))
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Companies);

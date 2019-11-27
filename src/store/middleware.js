@@ -3,26 +3,14 @@ import Action from './action';
 import firebase from '../config/config';
 
 export default class Middleware {
-    static deleteStudent(data) {
+    static deleteAccount(data) {
         return dispatch => {
-            console.log(data)
-            // admin
-            // .auth()
-            // .getUserByEmail(data)
-            // .then(user => {
-            //     const uid = user.uid
-            //     admin
-            //     .auth()
-            //     .deleteUser(uid)
-            //     .then(() => console.log('Successfully! delete user'))
-            // })
-
-            // firebase
-            //     .database()
-            //     .ref(`students/${data}`)
-            //     .remove()
-            //     .then(res => console.log('delete successfully!'))
-            //     .catch(err => console.log(err))
+            firebase
+                .database()
+                .ref(`${data[0]}/${data[1]}`)
+                .remove()
+                .then(() => console.log('delete successfully!'))
+                .catch(err => console.log(err))
         }
     }
 
@@ -89,6 +77,8 @@ export default class Middleware {
     static profileUpdate(data) {
         return dispatch => {
             delete data[0].flag
+            delete data[0].posts
+
             if (data[0].accountType === 'Student') {
                 firebase
                     .database()
@@ -193,11 +183,54 @@ export default class Middleware {
 
     static Login(data) {
         return dispatch => {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(data.email, data.password)
-                .then(() => dispatch(Action.signInSuccess('signIn successfully!')))
-                .catch(err => console.log(err))
+            if (data.email !== 'admin@g.com') {
+                if (data.select) {
+                    firebase
+                        .database()
+                        .ref(data.select)
+                        .on('value', std => {
+                            let std1 = std.val();
+                            let flag = false;
+                            for (let i in std1) {
+                                flag = std1[i].email === data.email ? true : false;
+                                if (flag) {
+                                    firebase
+                                        .auth()
+                                        .signInWithEmailAndPassword(data.email, data.password)
+                                        .then(() => dispatch(Action.signInSuccess('signIn successfully!')))
+                                        .catch(err => console.log(err))
+                                    return '';
+                                }
+                            }
+                            setTimeout(() => {
+                                console.log(flag)
+                                !flag && alert('Your account has been deleted from Admin, Please create a new account with new Email-ID')
+                            }, 1000)
+                        })
+                } else {
+                    alert('Please select your account type!')
+                }
+            } else {
+                firebase
+                    .auth()
+                    .signInWithEmailAndPassword(data.email, data.password)
+                    .then(() => {
+                        dispatch(Action.signInSuccess('admin login successfully!'))
+                    })
+                    .catch(err => console.log(err))
+
+            }
+
+            // let user = firebase.auth().currentUser
+            // user.delete().then(()=> console.log('delete user'))
+            // firebase
+            //     .auth()
+            //     .signInWithEmailAndPassword(data.email, data.password)
+            //     .then((res) => {
+            //         res.user.delete()
+            // dispatch(Action.signInSuccess('signIn successfully!'))
+            // })
+            // .catch(err => console.log(err))
         }
     }
 

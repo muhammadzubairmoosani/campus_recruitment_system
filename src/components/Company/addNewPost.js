@@ -83,9 +83,9 @@ class AddNewPost extends React.Component {
                         </Form.Row>
 
                         <Form.Group as={Col} controlId="Address">
-                            <Form.Label>Description</Form.Label>
+                            <Form.Label>Job Description</Form.Label>
                             <Form.Control
-                                placeholder="Description"
+                                placeholder="Job Description"
                                 onChange={(text) => this._onChange('description', text.target.value)}
                                 value={this.state.description}
                             />

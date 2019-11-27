@@ -13,12 +13,14 @@ class Profile extends React.Component {
             mobile: '',
             address: '',
             accountType: '',
-            password: '',
             posts: [],
+            description: '',
             flag: true
         }
     }
 
+    // password: '',
+    // password: user[0].password,
     componentDidUpdate(prevProps) {
         const { user } = this.props
         if (prevProps.user !== user) {
@@ -30,17 +32,18 @@ class Profile extends React.Component {
                 address: user[0].address,
                 posts: user[0].posts,
                 accountType: user[0].accountType,
-                password: user[0].password,
+                description: user[0].description
             })
         }
     }
     _onChange = (key, value) => this.setState({ [key]: value, flag: false })
+
     _update = (...data) => {
         this.setState({ flag: true })
         this.props.updateDispatch(data)
     }
     render() {
-        const { companyName, email, mobile, HRname, address, flag } = this.state;
+        const { companyName, email, mobile, HRname, address, description, flag } = this.state;
         return (
             <Form className='mt-3'>
                 <Form.Row>
@@ -78,6 +81,15 @@ class Profile extends React.Component {
                         <Form.Label>Address</Form.Label>
                         <Form.Control value={address} type="text"
                             onChange={(text) => this._onChange('address', text.target.value)}
+                        />
+                    </Form.Group>
+                </Form.Row>
+
+                <Form.Row>
+                    <Form.Group as={Col} controlId="Description">
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control value={description} type="text"
+                            onChange={(text) => this._onChange('description', text.target.value)}
                         />
                     </Form.Group>
                 </Form.Row>

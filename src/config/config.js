@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 // import admin from 'firebase-admin';
+
 var firebaseConfig = {
     apiKey: "AIzaSyDNW1xIoDbjhKuftH4ORCF_mH1Ezt23T5g",
     authDomain: "campus-recruitment-syste-846b4.firebaseapp.com",

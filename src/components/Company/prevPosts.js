@@ -18,7 +18,7 @@ class PrevPosts extends React.Component {
             this.setState({ posts: this.props.user[0].posts })
         }
     }
-    
+
     componentDidMount() {
         this.props.userStatusDispatch()
     }
@@ -77,7 +77,7 @@ class PrevPosts extends React.Component {
                                         <Form.Control
                                             type="text"
                                             value={item.description}
-                                            onChange={(text) => this._onChange('description', text.target.value)}
+                                            onChange={(text) => this._onChange('description', text.target.value, index)}
                                             disabled={flag && 'disabled'}
                                         />
                                     </td>

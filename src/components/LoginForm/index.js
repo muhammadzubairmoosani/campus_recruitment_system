@@ -10,7 +10,8 @@ class LoginForm extends React.Component {
         this.state = {
             displayClass: 'd-flex',
             email: '',
-            password: ''
+            password: '',
+            select: ''
         }
     }
     componentDidMount() {
@@ -55,6 +56,15 @@ class LoginForm extends React.Component {
                             containerClass="mb-0"
                             onChange={(text) => this._onChange('password', text.target.value)}
                         />
+                        <select
+                            className="browser-default custom-select"
+                            onChange={(text) => this._onChange('select', text.target.value)}
+                        >
+                            <option>Select your account type</option>
+                            <option value="students">Student</option>
+                            <option value="companies">Company</option>
+                        </select>
+
                         <div className="text-center mb-4 mt-5">
                             <MDBBtn
                                 color="danger"
@@ -62,7 +72,7 @@ class LoginForm extends React.Component {
                                 className="btn-block z-depth-2"
                                 onClick={() => {
                                     // const data = { email, password, accountType }
-                                    const data = { email, password }
+                                    const data = { email, password, select: this.state.select }
                                     loginDispatch(data)
                                 }}
                             >

@@ -15,9 +15,10 @@ class Students extends React.Component {
             students.push(allAccounts[0][i])
             uid.push(i)
         }
-        const _delete = (index, userEmail) => {
+        const _delete = (index, ACType) => {
             let selectedUid = uid.filter((item, indx) => indx === index)
-            deleteStudentDispatch(selectedUid[0],userEmail)
+            let accountType = ACType === 'Student' ? 'students' : 'companies'
+            deleteStudentDispatch(accountType, selectedUid[0])
         }
         return (
             <>
@@ -52,7 +53,7 @@ class Students extends React.Component {
                                 <td>{item.otherSkills}</td>
                                 <td style={{ textAlign: 'right' }}>
                                     <Button variant='danger'
-                                        onClick={() => _delete(index, item.email)}
+                                        onClick={() => _delete(index, item.accountType)}
                                     >
                                         Delete
                                     </Button>
@@ -74,7 +75,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getStudentsDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
-        deleteStudentDispatch: (...data) => dispatch(Middleware.deleteStudent(data))
+        deleteStudentDispatch: (...data) => dispatch(Middleware.deleteAccount(data))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Students);
