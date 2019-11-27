@@ -8,7 +8,7 @@ class Vacancies extends React.Component {
         const { user } = this.props;
         return (
             <Accordion>
-                {!!user.length && user[0].posts && user[0].posts.map((item, index) => {
+                {!!user.length && !!user[0].posts && user[0].posts.map((item, index) => {
                     return <Card>
                         <Card.Header>
                             <Table striped bordered>

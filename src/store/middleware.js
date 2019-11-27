@@ -215,11 +215,8 @@ export default class Middleware {
                 firebase
                     .auth()
                     .signInWithEmailAndPassword(data.email, data.password)
-                    .then(() => {
-                        dispatch(Action.signInSuccess('admin login successfully!'))
-                    })
+                    .then(() => dispatch(Action.signInSuccess('admin login successfully!')))
                     .catch(err => console.log(err))
-
             }
 
             // let user = firebase.auth().currentUser
@@ -243,7 +240,12 @@ export default class Middleware {
             firebase
                 .auth()
                 .signOut()
-                .then(() => window.location.replace('/'))
+                .then(() => {
+                    console.log('Successfully sign out')
+                    firebase
+                        .auth()
+                        .onAuthStateChanged(user => dispatch(Action.userLoginStatus(user)))
+                })
                 .catch(err => console.log(err))
         }
     }

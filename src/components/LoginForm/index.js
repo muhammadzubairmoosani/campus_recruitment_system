@@ -3,6 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBInput } 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Middleware from "../../store/middleware";
+import { Button } from 'react-bootstrap';
 
 class LoginForm extends React.Component {
     constructor() {
@@ -11,7 +12,8 @@ class LoginForm extends React.Component {
             displayClass: 'd-flex',
             email: '',
             password: '',
-            select: ''
+            select: '',
+            flag: false
         }
     }
     componentDidMount() {
@@ -27,16 +29,17 @@ class LoginForm extends React.Component {
         const {
             displayClass,
             email,
-            password
+            password,
+            select
         } = this.state;
 
         return (
-            <MDBContainer className='shadow w-50 p-0 mt-5'>
+            <MDBContainer className='shadow w-50 p-0 pt-5'>
                 <MDBCard>
                     <div className="header pt-3 grey lighten-2">
                         <MDBRow className="d-flex justify-content-start">
-                            <h3 className="deep-grey-text mt-3 mb-4 pb-1 mx-5">
-                                {accountType} Log in
+                            <h3 className=" text-dark mt-0 mb-0 pb-1 mx-5">
+                                {accountType} Log In
                             </h3>
                         </MDBRow>
                     </div>
@@ -65,31 +68,43 @@ class LoginForm extends React.Component {
                             <option value="companies">Company</option>
                         </select>
 
-                        <div className="text-center mb-4 mt-5">
+                        <div className="text-center mb-4 mt-4">
                             <MDBBtn
-                                color="danger"
+                                color="success"
                                 type="button"
-                                className="btn-block z-depth-2"
+                                className="btn-block z-depth-2 font-weight-bold"
                                 onClick={() => {
                                     // const data = { email, password, accountType }
-                                    const data = { email, password, select: this.state.select }
+                                    // const data = { email, password, select: this.state.select }
+                                    const data = { email, password, select }
                                     loginDispatch(data)
                                 }}
                             >
-                                Log in
+                                Sign In
                             </MDBBtn>
                         </div>
                         <p
                             className="font-small grey-text justify-content-center"
                             style={{ display: displayClass }}
                         >
-                            Don't have an account?
+                            Don't have an account?,
+                                <span
+                                className={select && select !== 'Select your account type' ? 'text-success' : 'text-danger'}
+                                style={{ marginLeft: '.5em' }}
+                            >
+                                Select your account type before
+                                </span>
                             <Link
-                                to={accountType === 'Student' ? '/studentSignUp' : '/companySignUp'}
-                                className="dark-grey-text font-weight-bold ml-1"
+                                disabled='disabled'
+                                to={select === 'students' ? '/studentSignUp' : '/companySignUp'}
+                                className=" font-weight-bold ml-1"
                                 accountType={accountType}
                             >
-                                Sign up
+                                <MDBBtn
+                                    color='primary'
+                                    size="sm"
+                                    disabled={select && select !== 'Select your account type' ? '' : 'disabled'}
+                                >Sign Up</MDBBtn>
                             </Link>
                         </p>
                     </MDBCardBody>

@@ -49,7 +49,7 @@ class Profile extends React.Component {
         const { user } = this.props;
         const { name, email, mobile, age, gender, marks, branch, university, otherSkills, address, flag } = this.state;
         return (
-            <Form>
+            <Form className='p-3 border'>
                 <Form.Row>
                     <Form.Group as={Col} controlId="studentName">
                         <Form.Label>Student Name</Form.Label>

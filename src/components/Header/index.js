@@ -39,17 +39,50 @@ class NavigationBar extends React.Component {
             // message,
             // accountType
         } = this.props;
-        // console.log(user)
+        console.log(user)
         return (
-            <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
-                <Navbar.Brand
-                    style={{ fontWeight: 'bold', fontSize: 17 }}
-                >Campus Recruitment System
+            <Navbar bg="light" expand="lg" className='shadow-sm py-2 px-4' >
+                <Navbar.Brand style={{ fontWeight: 'bold', fontSize: 19 }} className='text-dark'>
+                    Campus Recruitment System
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         {user[0] ?
+                            <>
+                                <Redirect to={user[0].accountType === 'Admin' ?
+                                    'adminDeshboard' : user[0].accountType === 'Student' ?
+                                        'studentDeshboard' : user[0].accountType === 'Company' ?
+                                            'companyDeshboard' : null
+                                }
+                                />
+                                <Nav.Link onClick={() => signOutDispatch()}>
+                                    <Link to='/'>
+                                        <Button size='sm' variant='outline-dark' onClick={() => signOutDispatch()}>Sign Out</Button>
+                                    </Link>
+                                </Nav.Link>
+                            </>
+                            :
+                            <Nav.Link>
+                                <Link to='login'>
+                                    <Button size='sm' variant='outline-primary'>Sign In</Button>
+                                </Link>
+                            </Nav.Link>
+                        }
+                        {/* <MDBBtn
+                            color="danger"
+                            type="button"
+                            className="btn-block z-depth-2"
+                            onClick={() => {
+                                // const data = { email, password, accountType }
+                                const data = { email, password, select: this.state.select }
+                                loginDispatch(data)
+                            }}
+                        >
+                            Log in
+                            </Button> */}
+
+                        {/* {user[0] ?
                             <>
                                 {
                                     user[0].accountType === 'Admin' ?
@@ -70,7 +103,7 @@ class NavigationBar extends React.Component {
                                                 : null
                                 }
                             </>
-                            : null}
+                            : null} */}
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -91,7 +124,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         userStatusDispatch: () => dispatch(Middleware.userStatus()),
-        signOutDispatch: () => dispatch(Middleware.signOut())
+        signOutDispatch: () => dispatch(Middleware.signOut()),
+        loginDispatch: data => dispatch(Middleware.Login(data))
+
     }
 }
 

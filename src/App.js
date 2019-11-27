@@ -15,15 +15,15 @@ export default class App extends React.Component {
     return (
       <Router>
           <NavigationBar />
-        {/* <div className='App'> */}
-          <Route exact path='/' component={Cards} />
+        <div className='App'>
+          {/* <Route exact path='/' component={Cards} /> */}
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/studentSignUp' component={StudentSignUp} />
           <Route exact path='/companySignUp' component={CompanySignUp} />
           <Route exact path='/studentDeshboard' component={StudentDeshboard} />
           <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
           <Route exact path='/adminDeshboard' component={AdminDeshboard} />
-        {/* </div> */}
+        </div>
       </Router>
     )
   }

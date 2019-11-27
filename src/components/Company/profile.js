@@ -19,8 +19,6 @@ class Profile extends React.Component {
         }
     }
 
-    // password: '',
-    // password: user[0].password,
     componentDidUpdate(prevProps) {
         const { user } = this.props
         if (prevProps.user !== user) {
@@ -45,7 +43,7 @@ class Profile extends React.Component {
     render() {
         const { companyName, email, mobile, HRname, address, description, flag } = this.state;
         return (
-            <Form className='mt-3'>
+            <Form className='border p-3'>
                 <Form.Row>
                     <Form.Group as={Col} controlId="CompanyName">
                         <Form.Label>Company Name</Form.Label>

@@ -25,7 +25,7 @@ class Vacancies extends React.Component {
         keys = Object.keys(vacancies);
         return (
             <Accordion>
-                {!!jobs.length && jobs.map((item, index) => {
+                {!!user.length && !!jobs.length && jobs.map((item, index) => {
                     return <Card>
                         <Card.Header>
                             <Table striped bordered>
@@ -64,7 +64,7 @@ class Vacancies extends React.Component {
                             {item.posts && item.posts.map((i, indx) => {
                                 let isExist = null;
                                 for (let key in i.appliedStudents) {
-                                    if (user.length && i.appliedStudents[key] === user[1][0]) {
+                                    if (user[1][0] && i.appliedStudents[key] === user[1][0]) {
                                         isExist = i.appliedStudents[key]
                                     }
                                 }

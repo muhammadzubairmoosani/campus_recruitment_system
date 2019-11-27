@@ -9,7 +9,7 @@ export default class AdminDeshboard extends React.Component {
         return (
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={3} className='bg-white' style={{ minHeight: '87vh' }}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
                                 <Nav.Link eventKey="first">View Students</Nav.Link>
@@ -22,7 +22,7 @@ export default class AdminDeshboard extends React.Component {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={9} className='p-0 bg-white'>
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
                                 <Students />

@@ -23,11 +23,11 @@ class AddNewPost extends React.Component {
 
     render() {
         const { user } = this.props;
-        this.state.key = user[0] && user[1][0]
+        this.state.key = !!user.length ? user[1][0] : ''
         return (
             <>
-                {user[0] ?
-                    <Form className='mt-3'>
+                {!!user.length ?
+                    <Form className='border p-3'>
                         <Form.Row>
                             <Form.Group as={Col} controlId="CompanyName">
                                 <Form.Label>Company name</Form.Label>
