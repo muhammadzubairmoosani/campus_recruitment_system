@@ -10,6 +10,7 @@ class Cards extends React.Component {
         return (
             <div
                 style={{ marginTop: '6em' }}
+                // style={{ paddingTop: '6em' }}
                 className='text-center d-flex flex-row justify-content-around align-items-center flex-wrap'
             >
                 <Card style={{ width: '18rem' }} className='shadow p-3 mb-5 bg-white rounded'>

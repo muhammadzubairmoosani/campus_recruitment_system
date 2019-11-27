@@ -39,8 +39,13 @@ class PrevPosts extends React.Component {
     }
 
     render() {
-        const { user, deleteDispatch, updateDispatch } = this.props;
+        const { user, deletePostDispatch } = this.props;
         const { posts, flag } = this.state;
+        const _deletePost = (index) => {
+            user[0].posts.splice(index, 1);
+            deletePostDispatch(user)
+        }
+
         return (
             <>
                 {posts && posts.length ?
@@ -87,7 +92,7 @@ class PrevPosts extends React.Component {
                                         </Button>
                                     </td>
                                     <td className='text-center'>
-                                        <Button variant="danger" onClick={() => deleteDispatch(index, user[1][0])}>
+                                        <Button variant="danger" onClick={() => _deletePost(index)}>
                                             Delete
                                         </Button>
                                     </td>
@@ -113,7 +118,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        deleteDispatch: (...data) => dispatch(Middleware.deletePost(data)),
+        deletePostDispatch: (data) => dispatch(Middleware.deletePost(data)),
         updateDispatch: (...data) => dispatch(Middleware.updatePost(data)),
         userStatusDispatch: () => dispatch(Middleware.userStatus())
     }

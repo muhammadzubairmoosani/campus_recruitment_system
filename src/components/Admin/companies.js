@@ -2,28 +2,14 @@ import React from 'react';
 import { Accordion, Card, Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Middleware from '../../store/middleware';
-// let keys;
-// let userKey;
 
 class Companies extends React.Component {
     componentDidMount() {
         this.props.getCompaniesDataDispatch()
     }
-    // componentDidUpdate(prevProps) {
-    //     const { user } = this.props;
-    //     if (prevProps.user !== user) {
-    //         userKey = user[1][0];
-    //     }
-    // }
 
-    // _apply = (companyIndex, jobIndex) => {
-    //     let companykey = keys[companyIndex];
-    //     this.props.jobApplyDispatch(companykey, companyIndex, [userKey, this.props.user[0]], jobIndex)
-    // }
     render() {
-        const { vacancies, user, allAccounts, deleteStudentDispatch } = this.props;
-        // let jobs = Object.values(vacancies);
-        // keys = Object.keys(vacancies);
+        const { allAccounts, deleteAccountDispatch, deletePostDispatch } = this.props;
         let companies = []
         let uid = [];
         for (let i in allAccounts[1]) {
@@ -31,19 +17,18 @@ class Companies extends React.Component {
             uid.push(i)
         }
 
-        // let students = [];
-        // for (let i in allAccounts[0]) {
-        //     students.push(allAccounts[0][i])
-        // }
-
-
-
-        const _delete = (index, ACType) => {
-            let selectedUid = uid.filter((item, indx) => indx === index)
-            let accountType = ACType === 'Student' ? 'students' : 'companies'
-            deleteStudentDispatch(accountType, selectedUid[0])
+        const _deletePost = (companyIndex, postIndex) => {
+            companies[companyIndex].posts.splice(postIndex, 1)
+            let selectedUid = uid.filter((item, indx) => indx === companyIndex)
+            let selectedCompany = companies.filter((item, indx) => indx === companyIndex)
+            deletePostDispatch(selectedCompany[0], selectedUid)
         }
 
+        const _deleteAccount = (index, ACType) => {
+            let selectedUid = uid.filter((item, indx) => indx === index)
+            let accountType = ACType === 'Student' ? 'students' : 'companies'
+            deleteAccountDispatch(accountType, selectedUid[0])
+        }
 
         return (
             <Accordion>
@@ -81,7 +66,7 @@ class Companies extends React.Component {
                                         </td>
                                         <td className='text-right'>
                                             <Button variant='danger'
-                                                onClick={() => _delete(index, item.accountType)}
+                                                onClick={() => _deleteAccount(index, item.accountType)}
                                             >Delete</Button>
                                         </td>
                                     </tr>
@@ -90,12 +75,6 @@ class Companies extends React.Component {
                         </Card.Header>
                         <Card.Body>
                             {item.posts && item.posts.map((i, indx) => {
-                                let isExist = null;
-                                for (let key in i.appliedStudents) {
-                                    if (user.length && key === user[1][0]) {
-                                        isExist = i.appliedStudents[key]
-                                    }
-                                }
                                 return <Accordion.Collapse eventKey={index}>
                                     <Table striped bordered>
                                         <thead>
@@ -103,7 +82,7 @@ class Companies extends React.Component {
                                                 <th>Job Title</th>
                                                 <th>Job Descripion</th>
                                                 <th>Salary</th>
-                                                {/* <th>Delete Post</th> */}
+                                                <th>Delete Post</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -111,11 +90,11 @@ class Companies extends React.Component {
                                                 <td>{i.jobTitle}</td>
                                                 <td>{i.description}</td>
                                                 <td>{i.salary}</td>
-                                                {/* <td className='text-right'>
+                                                <td className='text-right'>
                                                     <Button variant='danger'
-                                                        onClick={() => _delete(index, item.accountType)}
+                                                        onClick={() => _deletePost(index, indx)}
                                                     >Delete</Button>
-                                                </td> */}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </Table>
@@ -131,17 +110,14 @@ class Companies extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        // vacancies: state.reducer.vacancies,
-        user: state.reducer.user,
         allAccounts: state.reducer.allAccounts
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
         getCompaniesDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
-        // jobApplyDispatch: (...data) => dispatch(Middleware.jobApply(data))
-        deleteStudentDispatch: (...data) => dispatch(Middleware.deleteAccount(data))
-
+        deleteAccountDispatch: (...data) => dispatch(Middleware.deleteAccount(data)),
+        deletePostDispatch: (...data) => dispatch(Middleware.deletePost(data)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Companies);

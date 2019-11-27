@@ -1,5 +1,4 @@
 import Action from './action';
-// import { firebase, admin } from '../config/config';
 import firebase from '../config/config';
 
 export default class Middleware {
@@ -9,7 +8,7 @@ export default class Middleware {
                 .database()
                 .ref(`${data[0]}/${data[1]}`)
                 .remove()
-                .then(() => console.log('delete successfully!'))
+                .then(() => console.log('delete account successfully!'))
                 .catch(err => console.log(err))
         }
     }
@@ -53,10 +52,12 @@ export default class Middleware {
 
     static deletePost(data) {
         return dispatch => {
+            let uid = data[1][0];
+            let posts = data[0].posts;
             firebase
                 .database()
-                .ref(`companies/${data[1]}/posts/${data[0]}`)
-                .remove()
+                .ref(`companies/${uid}/posts`)
+                .set(posts)
                 .then(res => console.log('delete successfully!'))
                 .catch(err => console.log(err))
         }

@@ -42,7 +42,10 @@ class NavigationBar extends React.Component {
         // console.log(user)
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm p-3 mx-3' >
-                <Navbar.Brand href="#home">Recruitment System</Navbar.Brand>
+                <Navbar.Brand
+                    style={{ fontWeight: 'bold', fontSize: 17 }}
+                >Campus Recruitment System
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
