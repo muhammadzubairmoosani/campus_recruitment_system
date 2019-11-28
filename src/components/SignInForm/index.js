@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Middleware from "../../store/middleware";
 
-class LoginForm extends React.Component {
+class SignInForm extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
     render() {
         const {
             accountType,
-            loginDispatch
+            signInDispatch
         } = this.props;
         const {
             displayClass,
@@ -72,12 +72,7 @@ class LoginForm extends React.Component {
                                 color="success"
                                 type="button"
                                 className="btn-block z-depth-2 font-weight-bold"
-                                onClick={() => {
-                                    // const data = { email, password, accountType }
-                                    // const data = { email, password, select: this.state.select }
-                                    const data = { email, password, select }
-                                    loginDispatch(data)
-                                }}
+                                onClick={() => signInDispatch(email, password, select)}
                             >
                                 Sign In
                             </MDBBtn>
@@ -120,8 +115,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loginDispatch: data => dispatch(Middleware.Login(data))
+        signInDispatch: (...data) => dispatch(Middleware.signIn(data))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

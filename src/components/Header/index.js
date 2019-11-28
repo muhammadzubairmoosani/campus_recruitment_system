@@ -38,7 +38,7 @@ class NavigationBar extends React.Component {
         } = this.props;
         return (
             <Navbar bg="light" expand="lg" className='shadow-sm py-2 px-4' >
-                <Navbar.Brand style={{ fontWeight: 'bold', fontSize: 19 }} className='text-dark'>
+                <Navbar.Brand style={{ fontWeight: 'bold', fontSize: 17 }} className='text-dark'>
                     Campus Recruitment System
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -60,15 +60,15 @@ class NavigationBar extends React.Component {
                             </>
                             :
                             <Nav.Link>
-                                <Link to='login'>
-                                    <Button size='sm' variant='outline-primary'>Sign In</Button>
+                                <Link to='signIn'>
+                                    <Button size='sm' variant='outline-success'>Sign In</Button>
                                 </Link>
                             </Nav.Link>
                         }
                     </Nav>
                     <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-success">Search</Button>
+                        <FormControl type="text" size='sm' placeholder="Search" className="mr-sm-2" />
+                        <Button variant="outline-success" size='sm'>Search</Button>
                     </Form>
                 </Navbar.Collapse>
             </Navbar >

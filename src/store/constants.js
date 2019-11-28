@@ -1,12 +1,6 @@
-
-export const ACCOUNT_TYPE = 'ACCOUNT_TYPE';
-export const LOG_IN = 'LOG_IN';
-export const LOGIN_STATUS = 'LOGIN_STATUS';
-export const SIGN_UP = 'SIGN_UP';
+export const USER_STATUS = 'USER_STATUS';
 export const VACANCIES = 'VACANCIES';
-export const COMPANIES_AND_STUDENTS = 'COMPANIES_AND_STUDENTS';
-export const JOB_APPLICATIONS = 'JOB_APPLICATIONS';
-
-
-
-
+export const COMPANIES = 'COMPANIES';
+export const SIGN_OUT = 'SIGN_OUT';
+export const STUDENTS = 'STUDENTS';
+export const MESSAGE = 'MESSAGE';

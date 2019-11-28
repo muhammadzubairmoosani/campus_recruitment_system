@@ -8,11 +8,15 @@ class Students extends React.Component {
         this.props.getStudentsDataDispatch()
     }
     render() {
-        const { allAccounts, deleteStudentDispatch } = this.props;
+        const {
+            allAccounts,
+            studentsData,
+            deleteStudentDispatch
+        } = this.props;
         let students = [];
         let uid = [];
-        for (let i in allAccounts[0]) {
-            students.push(allAccounts[0][i])
+        for (let i in studentsData) {
+            students.push(studentsData[i])
             uid.push(i)
         }
         const _delete = (index, ACType) => {
@@ -51,7 +55,7 @@ class Students extends React.Component {
                                 <td>{item.branch}</td>
                                 <td>{item.university}</td>
                                 <td>{item.otherSkills}</td>
-                                <td style={{ textAlign: 'right' }}>
+                                <td style={{ textAlign: 'center' }}>
                                     <Button variant='danger'
                                         onClick={() => _delete(index, item.accountType)}
                                     >
@@ -69,13 +73,16 @@ class Students extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        allAccounts: state.reducer.allAccounts
+        // allAccounts: state.reducer.allAccounts,
+        studentsData: state.reducer.students,
+
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
-        getStudentsDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
+        getStudentsDataDispatch: () => dispatch(Middleware.getStudents()),
         deleteStudentDispatch: (...data) => dispatch(Middleware.deleteAccount(data))
+        // getStudentsDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Students);

@@ -1,66 +1,46 @@
 import {
-    ACCOUNT_TYPE,
-    // LOG_IN,
-    SIGN_UP,
-    LOGIN_STATUS,
+    USER_STATUS,
     VACANCIES,
-    COMPANIES_AND_STUDENTS,
-    JOB_APPLICATIONS
-    // MESSAGE
+    MESSAGE,
+    COMPANIES,
+    STUDENTS,
 } from './constants';
 
 const initialState = {
-    accountType: '',
     user: {},
-    // message: '',
-    companies: [],
+    message: '',
+    companies: {},
+    students: {},
     vacancies: {},
-    allAccounts: {},
-    signUpUserData: {},
-    jobApplications: {}
 }
 
 export default function Reducer(state = initialState, action) {
     switch (action.type) {
-        case ACCOUNT_TYPE:
+        case MESSAGE:
             return {
                 ...state,
-                accountType: action.payload,
+                message: action.payload,
             };
-        case COMPANIES_AND_STUDENTS:
-            return {
-                ...state,
-                allAccounts: action.payload,
-            };
-        case LOGIN_STATUS:
-            // case LOG_IN:
-            // case SIGN_UP:
+        case USER_STATUS:
             return {
                 ...state,
                 user: action.payload,
-                appliedUser: action
             };
-        case JOB_APPLICATIONS:
+        case COMPANIES:
             return {
                 ...state,
-                jobApplications: action.payload
+                companies: action.payload,
             };
-
-        case SIGN_UP:
+        case STUDENTS:
             return {
                 ...state,
-                signUpUserData: action.payload,
+                students: action.payload,
             };
         case VACANCIES:
             return {
                 ...state,
                 vacancies: action.payload,
             };
-        // case LOG_IN:
-        //     return {
-        //         ...state,
-        //         message: action.payload,
-        //     };
         default:
             return state;
     }

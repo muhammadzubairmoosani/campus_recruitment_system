@@ -7,15 +7,27 @@ class Companies extends React.Component {
     componentDidMount() {
         this.props.getCompaniesDataDispatch()
     }
-
     render() {
-        const { allAccounts, deleteAccountDispatch, deletePostDispatch } = this.props;
+        const {
+            // allAccounts,
+            companiesData,
+            deleteAccountDispatch,
+            deletePostDispatch
+        } = this.props;
+        // let companies = []
+        // let uid = [];
+        // for (let i in allAccounts[1]) {
+        //     companies.push(allAccounts[1][i])
+        //     uid.push(i)
+        // }
         let companies = []
         let uid = [];
-        for (let i in allAccounts[1]) {
-            companies.push(allAccounts[1][i])
+        for (let i in companiesData) {
+            companies.push(companiesData[i])
             uid.push(i)
         }
+        // console.log(companies)
+
 
         const _deletePost = (companyIndex, postIndex) => {
             companies[companyIndex].posts.splice(postIndex, 1)
@@ -110,12 +122,15 @@ class Companies extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        allAccounts: state.reducer.allAccounts
+        // allAccounts: state.reducer.allAccounts,
+        companiesData: state.reducer.companies,
+
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
-        getCompaniesDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
+        // getCompaniesDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
+        getCompaniesDataDispatch: () => dispatch(Middleware.getCompanies()),
         deleteAccountDispatch: (...data) => dispatch(Middleware.deleteAccount(data)),
         deletePostDispatch: (...data) => dispatch(Middleware.deletePost(data)),
     }

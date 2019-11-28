@@ -2,7 +2,32 @@ import Action from './action';
 import firebase from '../config/config';
 
 export default class Middleware {
-    static students = {};
+    static getCompanies() {
+        return dispatch => {
+            firebase
+                .database()
+                .ref('companies')
+                .on('value', snapshot => dispatch(Action.companies(snapshot.val())))
+        }
+    }
+
+    static getVacancies() {
+        return dispatch => {
+            firebase
+                .database()
+                .ref('companies')
+                .on('value', snapshot => dispatch(Action.vacancies(snapshot.val())))
+        }
+    }
+
+    static getStudents() {
+        return dispatch => {
+            firebase
+                .database()
+                .ref('students')
+                .on('value', snapshot => dispatch(Action.students(snapshot.val())))
+        }
+    }
 
     static deleteAccount(data) {
         return dispatch => {
@@ -10,36 +35,10 @@ export default class Middleware {
                 .database()
                 .ref(`${data[0]}/${data[1]}`)
                 .remove()
-                .then(() => console.log('delete account successfully!'))
-                .catch(err => console.log(err))
+                .then(() => dispatch(Action.message('Delete Account successfully!')))
+                .catch(err => dispatch(Action.message('Delete Account failed!', err)))
         }
     }
-
-    static getCompaniesAndStudentsData() {
-        return dispatch => {
-            let students = {};
-            let companies = {};
-            firebase
-                .database()
-                .ref('companies')
-                .on('value', snapshot => {
-                    companies = snapshot.val();
-                    firebase
-                        .database()
-                        .ref('students')
-                        .on('value', snapshot => {
-                            students = snapshot.val()
-                            dispatch(Action.companiesAndStudents(students, companies))
-                        })
-                })
-        }
-    }
-
-    // static accountType(data) {
-    //     return dispatch => {
-    //         dispatch(Action.type(data))
-    //     }
-    // }
 
     static jobApply(data) {
         return dispatch => {
@@ -47,8 +46,8 @@ export default class Middleware {
                 .database()
                 .ref(`companies/${data[0]}/posts/${data[3]}/appliedStudents`)
                 .push(data[2])
-                .then(() => console.log('Apply Successfully!'))
-                .catch(err => console.log(err))
+                .then(() => dispatch(Action.message('Application send successfully!')))
+                .catch(err => dispatch(Action.message('Application failed!', err)))
         }
     }
 
@@ -60,8 +59,8 @@ export default class Middleware {
                 .database()
                 .ref(`companies/${uid}/posts`)
                 .set(posts)
-                .then(res => console.log('delete successfully!'))
-                .catch(err => console.log(err))
+                .then(() => dispatch(Action.message('Delete post successfully!')))
+                .catch(err => dispatch(Action.message('Delete post failed!', err)))
         }
     }
 
@@ -71,10 +70,9 @@ export default class Middleware {
                 .database()
                 .ref(`companies/${data[1]}/posts`)
                 .set(data[0])
-                .then(res => console.log('update successfully!'))
-                .catch(err => console.log(err))
+                .then(res => dispatch(Action.message('Update post successfully!')))
+                .catch(err => dispatch(Action.message('Delete post failed!', err)))
         }
-
     }
 
     static profileUpdate(data) {
@@ -86,17 +84,8 @@ export default class Middleware {
                 .database()
                 .ref(`${type}/${data[1]}`)
                 .set(data[0])
-                .then(() => console.log('profile updata succeccfully!'))
-                .catch(err => console.log(err))
-        }
-    }
-
-    static getVacancies() {
-        return dispatch => {
-            firebase
-                .database()
-                .ref('companies')
-                .on('value', snapshot => dispatch(Action.vacancies(snapshot.val())))
+                .then(() => dispatch(Action.message('Profile updata successfully!')))
+                .catch(err => dispatch(Action.message('Profile updata failed!', err)))
         }
     }
 
@@ -123,7 +112,8 @@ export default class Middleware {
                 .database()
                 .ref(`companies/${key}/posts/${count}`)
                 .set(data)
-                .then(() => console.log('done!'))
+                .then(() => dispatch(Action.message('Add post successfully!')))
+                .catch(err => dispatch(Action.message('Add post failed!', err)))
         }
     }
 
@@ -134,54 +124,14 @@ export default class Middleware {
                 .createUserWithEmailAndPassword(data.email, data.password)
                 .then(() => {
                     delete data.password
-                    let type = data.accountType === 'Student' ? 'students' : 'conpanies';
+                    let type = data.accountType === 'Student' ? 'students' : 'companies';
                     firebase
                         .database()
                         .ref(type)
                         .push(data)
-                        .then(() => dispatch(Action.signUpSuccess(data)))
-                        .catch(err => console.log('signUp error', err))
+                        .then(() => dispatch(Action.message('Sign-up successfully!')))
+                        .catch(err => dispatch(Action.message('Sign-up failed!', err)))
                 })
-        }
-    }
-
-    static Login(data) {
-        return dispatch => {
-            if (data.email !== 'admin@g.com') {
-                if (data.select) {
-                    firebase
-                        .database()
-                        .ref(data.select)
-                        .on('value', std => {
-                            let std1 = std.val();
-                            let flag = false;
-                            for (let i in std1) {
-                                flag = std1[i].email === data.email ? true : false;
-                                if (flag) {
-                                    firebase
-                                        .auth()
-                                        .signInWithEmailAndPassword(data.email, data.password)
-                                        .then(() => {
-                                            dispatch(Action.signInSuccess('signIn successfully!'))
-                                            this.userStatus()
-                                        })
-                                        .catch(err => console.log(err))
-                                }
-                            }
-                            setTimeout(() => {
-                                !flag && alert('Your account has been deleted from Admin, Please create a new account with new Email-ID')
-                            }, 1000)
-                        })
-                } else {
-                    alert('Please select your account type!')
-                }
-            } else {
-                firebase
-                    .auth()
-                    .signInWithEmailAndPassword(data.email, data.password)
-                    .then(() => dispatch(Action.signInSuccess('admin login successfully!')))
-                    .catch(err => console.log(err))
-            }
         }
     }
 
@@ -190,17 +140,14 @@ export default class Middleware {
             firebase
                 .auth()
                 .signOut()
-                .then(() => {
-                    console.log('Sign Out Successfully')
-                    this.userStatus()
-                })
-                .catch(err => console.log(err))
+                .then(() => dispatch(Action.message('Sign-out successfully!')))
+                .catch(err => dispatch(Action.message('Sign-out fail:', err)))
         }
     }
 
     static userStatus() {
         return dispatch => {
-            let loginUser = [];
+            let signedInUser = [];
             firebase
                 .auth()
                 .onAuthStateChanged(user => {
@@ -209,28 +156,27 @@ export default class Middleware {
                             .database()
                             .ref('students')
                             .on('value', std => {
-                                this.students = std.val();
-                                loginUser = Object.values(std.val()).filter(i => i.email === user.email)
+                                signedInUser = Object.values(std.val()).filter(i => i.email === user.email)
                                 let key = []
                                 Object.values(std.val()).filter((i, index) => {
                                     if (i.email === user.email) {
                                         key = Object.keys(std.val()).filter((itm, indx) => indx === index)
                                     }
                                 })
-                                loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
+                                signedInUser.length && dispatch(Action.userLoginStatus(signedInUser[0], key))
                             })
                         firebase
                             .database()
                             .ref('companies')
                             .on('value', cmp => {
-                                loginUser = Object.values(cmp.val()).filter(i => i.email === user.email)
+                                signedInUser = Object.values(cmp.val()).filter(i => i.email === user.email)
                                 let key = []
                                 Object.values(cmp.val()).filter((i, index) => {
                                     if (i.email === user.email) {
                                         key = Object.keys(cmp.val()).filter((itm, indx) => indx === index)
                                     }
                                 })
-                                loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
+                                signedInUser.length && dispatch(Action.userLoginStatus(signedInUser[0], key))
                             })
                         firebase
                             .database()
@@ -239,8 +185,8 @@ export default class Middleware {
                                 let key = ''
                                 for (let i in admin.val()) {
                                     if (admin.val()[i] === user.email) {
-                                        loginUser = [admin.val()];
-                                        loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
+                                        signedInUser = [admin.val()];
+                                        signedInUser.length && dispatch(Action.userLoginStatus(signedInUser[0], key))
                                     }
                                 }
                             })
@@ -249,6 +195,43 @@ export default class Middleware {
                         dispatch(Action.userLoginStatus(user))
                     }
                 })
+        }
+    }
+    static signIn(data) {
+        return dispatch => {
+            if (data[0] === 'admin@g.com') {
+                firebase
+                    .auth()
+                    .signInWithEmailAndPassword(data[0], data[1])
+                    .then(() => dispatch(Action.message('Sign-in successfully!')))
+                    .catch(err => dispatch(Action.message('Sign-in failed!', err)))
+            }
+            else if (data[2]) {
+                firebase
+                    .database()
+                    .ref(data[2])
+                    .on('value', std => {
+                        let std1 = std.val();
+                        let flag = true;
+                        for (let i in std1) {
+                            if (std1[i].email === data[0]) {
+                                firebase
+                                    .auth()
+                                    .signInWithEmailAndPassword(data[0], data[1])
+                                    .then(() => dispatch(Action.message('Sign-in successfully!')))
+                                    .catch(err => dispatch(Action.signInFail('Sign-in failed!', err)))
+                                flag = false
+                                return '';
+                            }
+                        }
+                        if (flag) {
+                            dispatch(Action.message('Your account has been deleted from admin, Please create a new account with new email-ID'))
+                        }
+                    })
+            }
+            else {
+                dispatch(Action.message('Please select your account type!'))
+            }
         }
     }
 }

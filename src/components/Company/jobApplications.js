@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import Middleware from '../../store/middleware';
 
 class Vacancies extends React.Component {
+    componentDidMount() {
+        this.props.getJobApplicationsDispatch()
+    }
     render() {
-        const { user } = this.props;
-        let jobApplications = Middleware.students;
+        const { user, jobApplications } = this.props;
+        // let jobApplications = Middleware.students;
         return (
             <Accordion>
                 {!!user.length && !!user[0].posts && user[0].posts.map((item, index) => {
@@ -33,7 +36,7 @@ class Vacancies extends React.Component {
                                                 variant="link"
                                                 eventKey={index}
                                             >
-                                                <Button variant='success'>View</Button>
+                                                <Button>View</Button>
                                             </Accordion.Toggle>
                                         </td>
                                     </tr>
@@ -88,10 +91,15 @@ class Vacancies extends React.Component {
         );
     }
 }
-
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
+        jobApplications: state.reducer.students,
     }
 }
-export default connect(mapStateToProps)(Vacancies);
+const mapDispatchToProps = dispatch => {
+    return {
+        getJobApplicationsDispatch: () => dispatch(Middleware.getStudents())
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Vacancies);

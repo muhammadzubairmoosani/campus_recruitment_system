@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import NavigationBar from './components/Header';
-import LoginForm from './components/LoginForm';
+import SignInForm from './components/SignInForm';
 import StudentSignUp from './components/StudentSignUpForm';
 import CompanySignUp from './components/CompanySignUpForm';
 import StudentDeshboard from './components/Student';
@@ -15,7 +15,7 @@ export default class App extends React.Component {
       <Router>
         <div className='App'>
           <NavigationBar />
-          <Route exact path='/login' component={LoginForm} />
+          <Route exact path='/signIn' component={SignInForm} />
           <Route exact path='/studentSignUp' component={StudentSignUp} />
           <Route exact path='/companySignUp' component={CompanySignUp} />
           <Route exact path='/studentDeshboard' component={StudentDeshboard} />

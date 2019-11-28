@@ -6,7 +6,7 @@ let keys;
 let userKey;
 class Vacancies extends React.Component {
     componentDidMount() {
-        this.props.getDataDispatch()
+        this.props.viewVacanciesDispatch()
     }
     componentDidUpdate(prevProps) {
         const { user } = this.props;
@@ -20,12 +20,13 @@ class Vacancies extends React.Component {
         this.props.jobApplyDispatch(companykey, companyIndex, userKey, jobIndex)
     }
     render() {
-        const { vacancies, user } = this.props;
-        let jobs = Object.values(vacancies);
-        keys = Object.keys(vacancies);
+        const { companies, user,students } = this.props;
+        let vacancies = Object.values(companies);
+        keys = Object.keys(companies);
+        console.log(students)
         return (
             <Accordion>
-                {!!user.length && !!jobs.length && jobs.map((item, index) => {
+                {!!user.length && !!vacancies.length && vacancies.map((item, index) => {
                     return <Card>
                         <Card.Header>
                             <Table striped bordered>
@@ -108,13 +109,14 @@ class Vacancies extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        vacancies: state.reducer.vacancies,
-        user: state.reducer.user
+        companies: state.reducer.vacancies,
+        user: state.reducer.user,
+        students: state.reducer.students
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
-        getDataDispatch: () => dispatch(Middleware.getVacancies()),
+        viewVacanciesDispatch: () => dispatch(Middleware.getVacancies()),
         jobApplyDispatch: (...data) => dispatch(Middleware.jobApply(data))
     }
 }
