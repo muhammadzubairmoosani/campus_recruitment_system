@@ -4,17 +4,6 @@ import { connect } from 'react-redux';
 import Middleware from '../../store/middleware';
 
 class Vacancies extends React.Component {
-    //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
-    // componentDidMount() {
-    //     this.props.getApplicantDispatch()
-    // }
-    componentDidUpdate(nextProps) {
-        // console.log(jobApplications)
-        // console.log(Middleware.students)
-        // return a => a(console.log(Middleware.students)) 
-
-        // console.log(nextProps.jobApplications)
-    }
     render() {
         const { user } = this.props;
         let jobApplications = Middleware.students;
@@ -54,10 +43,8 @@ class Vacancies extends React.Component {
                         <Card.Body>
                             {
                                 item.appliedStudents && Object.values(item.appliedStudents).map(i => {
-                                    // console.log(Middleware.students)
                                     for (let uid in jobApplications) {
                                         if (uid === i) {
-                                            // console.log(Middleware.students[uid])
                                             return <Accordion.Collapse eventKey={index}>
                                                 <Table striped bordered>
                                                     <thead>
@@ -105,12 +92,6 @@ class Vacancies extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
-        // jobApplications: state.reducer.jobApplications
     }
 }
-function mapDispatchToProps(dispatch) {
-    return {
-        // getApplicantDispatch: () => dispatch(Middleware.getJobApplications())
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Vacancies);
+export default connect(mapStateToProps)(Vacancies);

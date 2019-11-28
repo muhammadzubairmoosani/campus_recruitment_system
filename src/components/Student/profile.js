@@ -151,6 +151,7 @@ function mapStateToProps(state) {
         signUpUserData: state.reducer.signUpUserData,
     }
 }
+
 function mapDispatchToProps(dispatch) {
     return {
         updateDispatch: (data) => dispatch(Middleware.profileUpdate(data)),
