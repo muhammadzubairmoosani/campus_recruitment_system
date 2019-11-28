@@ -4,10 +4,14 @@ import {
     SIGN_UP,
     LOGIN_STATUS,
     VACANCIES,
-    COMPANIES_AND_STUDENTS
+    COMPANIES_AND_STUDENTS,
+    JOB_APPLICATIONS
 } from './constants';
 
 export default class Action {
+    static jobApplications(data) {
+        return { type: JOB_APPLICATIONS, payload: data }
+    }
     static type(data) {
         return { type: ACCOUNT_TYPE, payload: data }
     }
@@ -24,6 +28,7 @@ export default class Action {
     }
 
     static signUpSuccess(data) {
+        console.log(data)
         return { type: SIGN_UP, payload: data }
     }
 

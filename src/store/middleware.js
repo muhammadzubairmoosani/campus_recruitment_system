@@ -77,21 +77,30 @@ export default class Middleware {
 
     static profileUpdate(data) {
         return dispatch => {
+            console.log(data)
             delete data[0].flag
             delete data[0].posts
+            let type = data[0].accountType === 'Student' ? 'students' : 'companies'
+            console.log(type)
+            firebase
+                .database()
+                .ref(`${type}/${data[1]}`)
+                .set(data[0])
+                .then(() => console.log('profile updata succeccfully!'))
+                .catch(err => console.log(err))
 
-            if (data[0].accountType === 'Student') {
-                firebase
-                    .database()
-                    .ref(`students/${data[1]}`)
-                    .set(data[0])
-            }
-            else if (data[0].accountType === 'Company') {
-                firebase
-                    .database()
-                    .ref(`companies/${data[1]}`)
-                    .set(data[0])
-            }
+            // if (data[0].accountType === 'Student') {
+            //     firebase
+            //         .database()
+            //         .ref(`students/${data[1]}`)
+            //         .set(data[0])
+            // }
+            // else if (data[0].accountType === 'Company') {
+            //     firebase
+            //         .database()
+            //         .ref(`companies/${data[1]}`)
+            //         .set(data[0])
+            // }
         }
     }
 
@@ -133,36 +142,86 @@ export default class Middleware {
 
     static signUp(data) {
         return dispatch => {
+            // console.log(data)
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(data.email, data.password)
-                .then(res => {
-                    delete data.password;
-                    if (data.accountType === 'Student') {
-                        firebase
-                            .database()
-                            .ref('students')
-                            .push(data)
-                            .then(res => {
-                                // let user = {
-                                //     data,
-                                //     accountType: data.accountType
-                                // }
-                                dispatch(Action.signUpSuccess([data, data.accountType]))
-                            })
-                            .catch(err => console.log(err))
-                    }
-                    else {
-                        console.log(data.accountType)
-                        firebase
-                            .database()
-                            .ref('companies')
-                            .push(data)
-                            .then(user => dispatch(Action.signUpSuccess(user)))
-                            .catch(err => console.log(err))
-                    }
+                .then(() => {
+                    delete data.password
+                    let type = data.accountType === 'Student' ? 'students' : 'conpanies';
+                    firebase
+                        .database()
+                        .ref(type)
+                        .push(data)
+                        .then(() => dispatch(Action.signUpSuccess(data)))
+                        .catch(err => console.log('signUp error', err))
                 })
-                .catch(err => console.log(err))
+            // firebase
+            //     .auth()
+            //     .createUserWithEmailAndPassword(data.email, data.password)
+            //     .then(res => {
+            //         delete data.password;
+            //         if (data.accountType === 'Student') {
+            //             firebase
+            //                 .database()
+            //                 .ref('students')
+            //                 .push(data)
+            //                 .then(res => {
+            //                     // let user = {
+            //                     //     data,
+            //                     //     accountType: data.accountType
+            //                     // }
+            //                     dispatch(Action.signUpSuccess([data, data.accountType]))
+            //                 })
+            //                 .catch(err => console.log(err))
+            //         }
+            //         else {
+            //             firebase
+            //                 .database()
+            //                 .ref('companies')
+            //                 .push(data)
+            //                 .then(user => dispatch(Action.signUpSuccess(user)))
+            //                 .catch(err => console.log(err))
+            //         }
+            //     })
+            //     .catch(err => console.log(err))
+
+
+
+
+
+
+
+
+            // firebase
+            //     .auth()
+            //     .createUserWithEmailAndPassword(data.email, data.password)
+            //     .then(res => {
+            //         delete data.password;
+            //         if (data.accountType === 'Student') {
+            //             firebase
+            //                 .database()
+            //                 .ref('students')
+            //                 .push(data)
+            //                 .then(res => {
+            //                     // let user = {
+            //                     //     data,
+            //                     //     accountType: data.accountType
+            //                     // }
+            //                     dispatch(Action.signUpSuccess([data, data.accountType]))
+            //                 })
+            //                 .catch(err => console.log(err))
+            //         }
+            //         else {
+            //             firebase
+            //                 .database()
+            //                 .ref('companies')
+            //                 .push(data)
+            //                 .then(user => dispatch(Action.signUpSuccess(user)))
+            //                 .catch(err => console.log(err))
+            //         }
+            //     })
+            //     .catch(err => console.log(err))
         }
     }
 
@@ -198,13 +257,15 @@ export default class Middleware {
                                     firebase
                                         .auth()
                                         .signInWithEmailAndPassword(data.email, data.password)
-                                        .then(() => dispatch(Action.signInSuccess('signIn successfully!')))
+                                        .then(() => {
+                                            dispatch(Action.signInSuccess('signIn successfully!'))
+                                            this.userStatus()
+                                        })
                                         .catch(err => console.log(err))
                                     return '';
                                 }
                             }
                             setTimeout(() => {
-                                console.log(flag)
                                 !flag && alert('Your account has been deleted from Admin, Please create a new account with new Email-ID')
                             }, 1000)
                         })
@@ -218,22 +279,8 @@ export default class Middleware {
                     .then(() => dispatch(Action.signInSuccess('admin login successfully!')))
                     .catch(err => console.log(err))
             }
-
-            // let user = firebase.auth().currentUser
-            // user.delete().then(()=> console.log('delete user'))
-            // firebase
-            //     .auth()
-            //     .signInWithEmailAndPassword(data.email, data.password)
-            //     .then((res) => {
-            //         res.user.delete()
-            // dispatch(Action.signInSuccess('signIn successfully!'))
-            // })
-            // .catch(err => console.log(err))
         }
     }
-
-
-
 
     static signOut() {
         return dispatch => {
@@ -241,26 +288,30 @@ export default class Middleware {
                 .auth()
                 .signOut()
                 .then(() => {
+                    this.userStatus()
                     console.log('Successfully sign out')
-                    firebase
-                        .auth()
-                        .onAuthStateChanged(user => dispatch(Action.userLoginStatus(user)))
                 })
                 .catch(err => console.log(err))
         }
     }
+    static students = {};
 
+    static getJobApplications() {
+        return dispatch => this.students && dispatch(Action.jobApplications(this.students))
+    }
     static userStatus() {
+        console.log("call userstatus")
         return dispatch => {
             let loginUser = [];
             firebase
                 .auth()
                 .onAuthStateChanged(user => {
-                    firebase
-                        .database()
-                        .ref('students')
-                        .on('value', std => {
-                            if (user) {
+                    if (user) {
+                        firebase
+                            .database()
+                            .ref('students')
+                            .on('value', std => {
+                                this.students = std.val();
                                 loginUser = Object.values(std.val()).filter(i => i.email === user.email)
                                 let key = []
                                 Object.values(std.val()).filter((i, index) => {
@@ -269,13 +320,11 @@ export default class Middleware {
                                     }
                                 })
                                 loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
-                            }
-                        })
-                    firebase
-                        .database()
-                        .ref('companies')
-                        .on('value', cmp => {
-                            if (user) {
+                            })
+                        firebase
+                            .database()
+                            .ref('companies')
+                            .on('value', cmp => {
                                 loginUser = Object.values(cmp.val()).filter(i => i.email === user.email)
                                 let key = []
                                 Object.values(cmp.val()).filter((i, index) => {
@@ -283,14 +332,30 @@ export default class Middleware {
                                         key = Object.keys(cmp.val()).filter((itm, indx) => indx === index)
                                     }
                                 })
+                                // let appliedUsers = []
+                                // loginUser[0].posts.filter(item => {
+                                //     for (let i in item.appliedStudents) {
+                                //         appliedUsers.push(item.appliedStudents[i])
+                                //     }
+                                // })
+                                // console.log(students)
+
+                                // for (let i in students) {
+                                //     loginUser[0].posts.filter(item => {
+                                //         for (let j in item.appliedStudents) {
+                                //             if (i === item.appliedStudents[j]) {
+                                //                 appliedStudentsUids.push(students[i])
+                                //             }
+                                //         }
+                                //     })
+                                //     console.log(appliedStudentsUids)
+                                // }
                                 loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
-                            }
-                        })
-                    firebase
-                        .database()
-                        .ref('Admin')
-                        .on('value', admin => {
-                            if (user) {
+                            })
+                        firebase
+                            .database()
+                            .ref('Admin')
+                            .on('value', admin => {
                                 let key = ''
                                 for (let i in admin.val()) {
                                     if (admin.val()[i] === user.email) {
@@ -298,8 +363,11 @@ export default class Middleware {
                                         loginUser.length && dispatch(Action.userLoginStatus(loginUser[0], key))
                                     }
                                 }
-                            }
-                        })
+                            })
+                    }
+                    else {
+                        dispatch(Action.userLoginStatus(user))
+                    }
                 })
         }
     }

@@ -12,7 +12,7 @@ class Notifications extends React.Component {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>hello world</td>
+                        <td>notifications</td>
                     </tr>
                 </tbody>
             </Table>

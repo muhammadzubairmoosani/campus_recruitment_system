@@ -9,7 +9,7 @@ export default class AdminDeshboard extends React.Component {
         return (
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row>
-                    <Col sm={3} className='bg-white' style={{ minHeight: '87vh' }}>
+                    <Col sm={3} className='bg-white' style={{ minHeight: '100vh' }}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
                                 <Nav.Link eventKey="first">View Students</Nav.Link>
@@ -32,6 +32,7 @@ export default class AdminDeshboard extends React.Component {
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
                                 {/* <SendNotification /> */}
+                                <h3>send notifications</h3>
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

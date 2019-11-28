@@ -20,10 +20,16 @@ class Profile extends React.Component {
             flag: true
         }
     }
+
+    componentDidMount() {
+        this.props.userStatusDispatch()
+    }
+
     componentDidUpdate(prevProps) {
         const { user } = this.props
         if (prevProps.user !== user) {
             this.setState({
+                age: user[0].age,
                 name: user[0].name,
                 email: user[0].email,
                 mobile: user[0].mobile,
@@ -35,16 +41,17 @@ class Profile extends React.Component {
                 otherSkills: user[0].otherSkills,
                 rollNo: user[0].rollNo,
                 accountType: user[0].accountType,
-                password: user[0].password,
             })
         }
     }
 
     _onChange = (key, value) => this.setState({ [key]: value, flag: false })
+
     _update = (...data) => {
         this.setState({ flag: true })
         this.props.updateDispatch(data)
     }
+    
     render() {
         const { user } = this.props;
         const { name, email, mobile, age, gender, marks, branch, university, otherSkills, address, flag } = this.state;
@@ -141,11 +148,13 @@ class Profile extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.reducer.user,
+        signUpUserData: state.reducer.signUpUserData,
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
-        updateDispatch: (data) => dispatch(Middleware.profileUpdate(data))
+        updateDispatch: (data) => dispatch(Middleware.profileUpdate(data)),
+        userStatusDispatch: () => dispatch(Middleware.userStatus())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

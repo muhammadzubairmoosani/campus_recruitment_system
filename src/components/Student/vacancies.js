@@ -36,6 +36,7 @@ class Vacancies extends React.Component {
                                         <th>Email</th>
                                         <th>Contact</th>
                                         <th>Adress</th>
+                                        <th>About Us</th>
                                         <th>View Vacancies</th>
                                     </tr>
                                 </thead>
@@ -46,6 +47,7 @@ class Vacancies extends React.Component {
                                         <td>{item.email}</td>
                                         <td>{item.mobile}</td>
                                         <td>{item.address}</td>
+                                        <td>{item.description}</td>
                                         <td className='p-0 text-center'>
                                             <Accordion.Toggle
                                                 disabled={item.posts ? '' : 'disabled'}
@@ -64,7 +66,7 @@ class Vacancies extends React.Component {
                             {item.posts && item.posts.map((i, indx) => {
                                 let isExist = null;
                                 for (let key in i.appliedStudents) {
-                                    if (user[1][0] && i.appliedStudents[key] === user[1][0]) {
+                                    if (user.length > 0 && i.appliedStudents[key] === user[1][0]) {
                                         isExist = i.appliedStudents[key]
                                     }
                                 }

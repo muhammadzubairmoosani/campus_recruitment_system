@@ -1,9 +1,8 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBInput } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBBtn, MDBCard, MDBCardBody, MDBInput } from 'mdbreact';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Middleware from "../../store/middleware";
-import { Button } from 'react-bootstrap';
 
 class LoginForm extends React.Component {
     constructor() {

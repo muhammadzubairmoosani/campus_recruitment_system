@@ -1,10 +1,11 @@
 import {
     ACCOUNT_TYPE,
-    LOG_IN,
+    // LOG_IN,
     SIGN_UP,
     LOGIN_STATUS,
     VACANCIES,
     COMPANIES_AND_STUDENTS,
+    JOB_APPLICATIONS
     // MESSAGE
 } from './constants';
 
@@ -14,7 +15,9 @@ const initialState = {
     // message: '',
     companies: [],
     vacancies: {},
-    allAccounts: {}
+    allAccounts: {},
+    signUpUserData: {},
+    jobApplications: {}
 }
 
 export default function Reducer(state = initialState, action) {
@@ -30,11 +33,23 @@ export default function Reducer(state = initialState, action) {
                 allAccounts: action.payload,
             };
         case LOGIN_STATUS:
-        // case LOG_IN:
-        case SIGN_UP:
+            // case LOG_IN:
+            // case SIGN_UP:
             return {
                 ...state,
                 user: action.payload,
+                appliedUser: action
+            };
+        case JOB_APPLICATIONS:
+            return {
+                ...state,
+                jobApplications: action.payload
+            };
+
+        case SIGN_UP:
+            return {
+                ...state,
+                signUpUserData: action.payload,
             };
         case VACANCIES:
             return {
@@ -46,7 +61,6 @@ export default function Reducer(state = initialState, action) {
         //         ...state,
         //         message: action.payload,
         //     };
-
         default:
             return state;
     }

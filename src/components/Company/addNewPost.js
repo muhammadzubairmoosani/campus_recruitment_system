@@ -21,9 +21,14 @@ class AddNewPost extends React.Component {
         this.setState({ jobTitle: '', description: '', salary: '', flag: true })
     }
 
+    componentDidUpdate(prvProps) {
+        const { user } = this.props;
+        if (prvProps.user !== user) {
+            this.setState({ key: user[1][0] });
+        }
+    }
     render() {
         const { user } = this.props;
-        this.state.key = !!user.length ? user[1][0] : ''
         return (
             <>
                 {!!user.length ?
