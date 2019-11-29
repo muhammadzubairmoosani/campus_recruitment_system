@@ -25,7 +25,7 @@ class Students extends React.Component {
         return (
             <>
                 {!!students.length && students.map((item, index) => {
-                    return <Table striped bordered>
+                    return <Table striped bordered key={index}>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -70,7 +70,7 @@ class Students extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        studentsData: state.companyReducer.students,
+        studentsData: state.CompanyReducer.students
     }
 }
 const mapDispatchToProps = dispatch => {

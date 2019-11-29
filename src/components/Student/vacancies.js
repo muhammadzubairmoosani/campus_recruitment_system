@@ -19,14 +19,13 @@ class Vacancies extends React.Component {
         this.props.jobApplyDispatch(companykey, companyIndex, userKey, jobIndex)
     }
     render() {
-        const { companies, user, students } = this.props;
+        const { companies, user } = this.props;
         let vacancies = Object.values(companies);
         keys = Object.keys(companies);
-        // console.log(students)
         return (
             <Accordion>
                 {!!user.length && !!vacancies.length && vacancies.map((item, index) => {
-                    return <Card>
+                    return <Card key={index}>
                         <Card.Header>
                             <Table striped bordered>
                                 <thead>
@@ -52,10 +51,8 @@ class Vacancies extends React.Component {
                                             <Accordion.Toggle
                                                 disabled={item.posts ? '' : 'disabled'}
                                                 as={Button}
-                                                variant="link"
                                                 eventKey={index}
-                                            >
-                                                <Button>View</Button>
+                                            >View
                                             </Accordion.Toggle>
                                         </td>
                                     </tr>
@@ -70,7 +67,7 @@ class Vacancies extends React.Component {
                                         isExist = i.appliedStudents[key]
                                     }
                                 }
-                                return <Accordion.Collapse eventKey={index}>
+                                return <Accordion.Collapse eventKey={index} key={indx}>
                                     <Table striped bordered>
                                         <thead>
                                             <tr>
@@ -110,7 +107,6 @@ const mapStateToProps = state => {
     return {
         companies: state.StudentReducer.vacancies,
         user: state.AuthReducer.user,
-        students: state.StudentReducer.students
     }
 }
 const mapDispatchToProps = dispatch => {

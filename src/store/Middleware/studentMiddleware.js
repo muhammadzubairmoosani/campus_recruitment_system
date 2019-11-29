@@ -9,14 +9,6 @@ export default class StudentMiddleware {
                 .on('value', snapshot => dispatch(StudentAction.vacancies(snapshot.val())))
         }
     }
-    static getStudents() {
-        return dispatch => {
-            firebase
-                .database()
-                .ref('students')
-                .on('value', snapshot => dispatch(StudentAction.students(snapshot.val())))
-        }
-    }
     static jobApply(data) {
         return dispatch => {
             firebase

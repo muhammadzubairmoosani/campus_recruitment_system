@@ -10,10 +10,10 @@ class Vacancies extends React.Component {
         const { user, jobApplications } = this.props;
         return (
             <>
-                {!!user.length && !!user[0].posts.appliedStudents ?
+                {!!user.length && !!user[0].posts ?
                     <Accordion>
                         {user[0].posts.map((item, index) => {
-                            return <Card>
+                            return <Card key={index}>
                                 <Card.Header>
                                     <Table striped bordered>
                                         <thead>
@@ -31,12 +31,10 @@ class Vacancies extends React.Component {
                                                 <td>{item.salary}</td>
                                                 <td className='p-0 text-right'>
                                                     <Accordion.Toggle
-                                                        // disabled={item.appliedStudents ? '' : 'disabled'}
+                                                        disabled={item.appliedStudents ? '' : 'disabled'}
                                                         as={Button}
-                                                        variant="link"
                                                         eventKey={index}
-                                                    >
-                                                        <Button>View</Button>
+                                                    >View
                                                     </Accordion.Toggle>
                                                 </td>
                                             </tr>
@@ -45,11 +43,10 @@ class Vacancies extends React.Component {
                                 </Card.Header>
                                 <Card.Body>
                                     {
-                                        item.appliedStudents && Object.values(item.appliedStudents).map(i => {
+                                        item.appliedStudents && Object.values(item.appliedStudents).map((i, indx) => {
                                             for (let uid in jobApplications) {
-                                                console.log(jobApplications[uid])
                                                 if (uid === i) {
-                                                    return <Accordion.Collapse eventKey={index}>
+                                                    return <Accordion.Collapse eventKey={index} key={indx}>
                                                         <Table striped bordered>
                                                             <thead>
                                                                 <tr>

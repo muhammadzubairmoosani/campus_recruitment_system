@@ -32,7 +32,7 @@ class Companies extends React.Component {
         return (
             <Accordion>
                 {!!companies.length && companies.map((item, index) => {
-                    return <Card>
+                    return <Card key={index}>
                         <Card.Header>
                             <Table striped bordered>
                                 <thead>
@@ -53,14 +53,12 @@ class Companies extends React.Component {
                                         <td>{item.email}</td>
                                         <td>{item.mobile}</td>
                                         <td>{item.address}</td>
-                                        <td className='p-0 text-center'>
+                                        <td className='text-right'>
                                             <Accordion.Toggle
                                                 disabled={item.posts ? '' : 'disabled'}
                                                 as={Button}
-                                                variant="link"
                                                 eventKey={index}
-                                            >
-                                                <Button>View</Button>
+                                            >View
                                             </Accordion.Toggle>
                                         </td>
                                         <td className='text-right'>
@@ -74,7 +72,7 @@ class Companies extends React.Component {
                         </Card.Header>
                         <Card.Body>
                             {item.posts && item.posts.map((i, indx) => {
-                                return <Accordion.Collapse eventKey={index}>
+                                return <Accordion.Collapse eventKey={index} key={indx}>
                                     <Table striped bordered>
                                         <thead>
                                             <tr>
@@ -108,7 +106,7 @@ class Companies extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        companiesData: state.companyReducer.companies,
+        companiesData: state.CompanyReducer.companies,
     }
 }
 const mapDispatchToProps = dispatch => {

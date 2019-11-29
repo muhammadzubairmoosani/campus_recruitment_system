@@ -15,15 +15,13 @@ class NavigationBar extends React.Component {
     componentDidMount() {
         this.props.userStatusDispatch();
     }
-
     render() {
         const {
             user,
             signOutDispatch,
-            // message,
         } = this.props;
         return (
-            <Navbar bg="light" expand="lg" className='shadow-sm py-2 px-4' >
+            <Navbar bg="light" expand="lg" className='shadow-sm py-3 px-3' >
                 <Navbar.Brand style={{ fontWeight: 'bold', fontSize: 17 }} className='text-dark'>
                     Campus Recruitment System
                 </Navbar.Brand>
@@ -38,24 +36,20 @@ class NavigationBar extends React.Component {
                                             'companyDeshboard' : null
                                 }
                                 />
-                                <Nav.Link onClick={() => signOutDispatch()}>
-                                    <Link to='/'>
-                                        <Button size='sm' variant='outline-dark' onClick={() => signOutDispatch()}>Sign Out</Button>
-                                    </Link>
-                                </Nav.Link>
+                                <Link to='/' onClick={() => signOutDispatch()}>
+                                    <Button size='sm' variant='outline-dark' onClick={() => signOutDispatch()}>Sign Out</Button>
+                                </Link>
                             </>
                             :
-                            <Nav.Link>
-                                <Link to='signIn'>
-                                    <Button size='sm' variant='outline-success'>Sign In</Button>
-                                </Link>
-                            </Nav.Link>
+                            <Link to='signIn'>
+                                <Button size='sm' variant='outline-success'>Sign In</Button>
+                            </Link>
                         }
                     </Nav>
-                    <Form inline>
+                    {/* <Form inline>
                         <FormControl type="text" size='sm' placeholder="Search" className="mr-sm-2" />
                         <Button variant="outline-success" size='sm'>Search</Button>
-                    </Form>
+                    </Form> */}
                 </Navbar.Collapse>
             </Navbar >
         )

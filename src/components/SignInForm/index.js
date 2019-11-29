@@ -7,24 +7,18 @@ class SignInForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            displayClass: 'd-flex',
             email: '',
             password: '',
             select: '',
             flag: false
         }
     }
-    componentDidMount() {
-        this.setState({ displayClass: this.props.accountType === 'Admin' && 'none' })
-    }
     _onChange = (key, value) => this.setState({ [key]: value });
     render() {
         const {
-            accountType,
             signInDispatch
         } = this.props;
         const {
-            displayClass,
             email,
             password,
             select
@@ -35,9 +29,7 @@ class SignInForm extends React.Component {
                 <MDBCard>
                     <div className="header pt-3 grey lighten-2">
                         <MDBRow className="d-flex justify-content-start">
-                            <h3 className=" text-dark mt-0 mb-0 pb-1 mx-5">
-                                {accountType} Log In
-                            </h3>
+                            <h3 className=" text-dark mt-0 mb-0 pb-1 mx-5">Log In</h3>
                         </MDBRow>
                     </div>
                     <MDBCardBody className="mx-4 mt-4">
@@ -75,10 +67,7 @@ class SignInForm extends React.Component {
                                 Sign In
                             </MDBBtn>
                         </div>
-                        <p
-                            className="font-small grey-text justify-content-center"
-                            style={{ display: displayClass }}
-                        >
+                        <p className="font-small grey-text justify-content-center">
                             Don't have an account?,
                                 <span
                                 className={select && select !== 'Select your account type' ? 'text-success' : 'text-danger'}
@@ -90,7 +79,6 @@ class SignInForm extends React.Component {
                                 disabled='disabled'
                                 to={select === 'students' ? '/studentSignUp' : '/companySignUp'}
                                 className=" font-weight-bold ml-1"
-                                accountType={accountType}
                             >
                                 <MDBBtn
                                     color='primary'

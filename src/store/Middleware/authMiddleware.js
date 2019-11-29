@@ -42,7 +42,7 @@ export default class AuthMiddleware {
                                 let key = []
                                 Object.values(std.val()).filter((i, index) => {
                                     if (i.email === user.email) {
-                                        key = Object.keys(std.val()).filter((itm, indx) => indx === index)
+                                        key = Object.keys(std.val()).filter((itm, indx) => indx === index);
                                     }
                                 })
                                 signedInUser.length && dispatch(AuthAction.userLoginStatus(signedInUser[0], key))
