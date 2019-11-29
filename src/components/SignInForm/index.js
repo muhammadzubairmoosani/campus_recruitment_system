@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AuthMiddleware from "../../store/Middleware/authMiddleware";
 import { Form, Button } from 'react-bootstrap';
-
 class SignInForm extends React.Component {
     constructor() {
         super();
