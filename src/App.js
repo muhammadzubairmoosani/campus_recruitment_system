@@ -12,17 +12,17 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 export default class App extends React.Component {
   render() {
     return (
-      <Router>
-        <div className='App'>
-          <NavigationBar />
-          <Route exact path='/signIn' component={SignInForm} />
-          <Route exact path='/studentSignUp' component={StudentSignUp} />
-          <Route exact path='/companySignUp' component={CompanySignUp} />
-          <Route exact path='/studentDeshboard' component={StudentDeshboard} />
-          <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
-          <Route exact path='/adminDeshboard' component={AdminDeshboard} />
-        </div>
-      </Router>
+      <div className='App'>
+        <Router>
+            <NavigationBar />
+            <Route exact path='/signIn' component={SignInForm} />
+            <Route exact path='/studentSignUp' component={StudentSignUp} />
+            <Route exact path='/companySignUp' component={CompanySignUp} />
+            <Route exact path='/studentDeshboard' component={StudentDeshboard} />
+            <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
+            <Route exact path='/adminDeshboard' component={AdminDeshboard} />
+        </Router>
+      </div>
     )
   }
 }

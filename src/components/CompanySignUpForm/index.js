@@ -22,8 +22,8 @@ class CompanySignUp extends React.Component {
         const { signUpDispatch } = this.props;
         return (
             <div className='d-flex justify-content-center'>
-                <Form className='shadow mt-5 col-xl-6 col-md-6 p-3'>
-                    <h3 className="deep-grey-text mt-3 mb-4 pb-1 mx-5" style={{ fontFamily: 'sans-serif' }}>
+                <Form className='shadow-lg mt-5 col-xl-5 col-md-6 col-11 p-4 bg-white rounded-lg'>
+                    <h3 className="deep-grey-text mb-4">
                         Company Register
                  </h3>
                     <Form.Row className='my-3'>
@@ -57,7 +57,7 @@ class CompanySignUp extends React.Component {
                     </Form.Row>
                     <Form.Row className='mb-3'>
                         <Col>
-                            <Button onClick={() => signUpDispatch(this.state)}>
+                            <Button className='w-100' onClick={() => signUpDispatch(this.state)}>
                                 <small>REGISTERED</small>
                             </Button>
                         </Col>

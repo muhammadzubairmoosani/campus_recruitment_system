@@ -103,7 +103,7 @@ class AddNewPost extends React.Component {
 
                         <Button variant="primary" disabled={this.state.flag && 'disabled'}
                             onClick={() => this._dispatch(this.state)}
-                        >Add New</Button>
+                        >Add Post</Button>
                     </Form >
                     : null}
             </>

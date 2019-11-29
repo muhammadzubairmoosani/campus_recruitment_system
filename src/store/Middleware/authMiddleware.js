@@ -81,25 +81,25 @@ export default class AuthMiddleware {
     }
     static signIn(data) {
         return dispatch => {
-            if (data[0] === 'admin@g.com') {
+            if (data.email === 'admin@g.com' && data.password === '444444') {
                 firebase
                     .auth()
-                    .signInWithEmailAndPassword(data[0], data[1])
+                    .signInWithEmailAndPassword(data.email, data.password)
                     .then(() => dispatch(AuthAction.message('Sign-in successfully!')))
                     .catch(err => dispatch(AuthAction.message('Sign-in failed!', err)))
             }
-            else if (data[2]) {
+            else if (data.select && data.select !== 'Select your account type') {
                 firebase
                     .database()
-                    .ref(data[2])
+                    .ref(data.select)
                     .on('value', std => {
                         let std1 = std.val();
                         let flag = true;
                         for (let i in std1) {
-                            if (std1[i].email === data[0]) {
+                            if (std1[i].email === data.email) {
                                 firebase
                                     .auth()
-                                    .signInWithEmailAndPassword(data[0], data[1])
+                                    .signInWithEmailAndPassword(data.email, data.password)
                                     .then(() => dispatch(AuthAction.message('Sign-in successfully!')))
                                     .catch(err => dispatch(AuthAction.message('Sign-in failed!', err)))
                                 flag = false

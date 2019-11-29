@@ -11,7 +11,6 @@ class NavigationBar extends React.Component {
             color: '#969797'
         }
     }
-
     componentDidMount() {
         this.props.userStatusDispatch();
     }
@@ -21,13 +20,15 @@ class NavigationBar extends React.Component {
             signOutDispatch,
         } = this.props;
         return (
-            <Navbar bg="light" expand="lg" className='shadow-sm py-3 px-3' >
-                <Navbar.Brand style={{ fontWeight: 'bold', fontSize: 17 }} className='text-dark'>
+            <Navbar bg="light" expand="lg" className='shadow-sm py-3 px-5 ' >
+                <Navbar.Brand
+                    style={{ fontWeight: 'bold', fontSize: 17, color: '#4081ED', userSelect: 'none' }}
+                >
                     Campus Recruitment System
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
+                    <Nav className="ml-auto">
                         {user[0] ?
                             <>
                                 <Redirect to={user[0].accountType === 'Admin' ?
@@ -37,12 +38,17 @@ class NavigationBar extends React.Component {
                                 }
                                 />
                                 <Link to='/' onClick={() => signOutDispatch()}>
-                                    <Button size='sm' variant='outline-dark' onClick={() => signOutDispatch()}>Sign Out</Button>
+                                    <Button 
+                                    size='sm' 
+                                    variant='outline-dark' 
+                                    onClick={() => signOutDispatch()}
+                                    >Sign Out
+                                    </Button>
                                 </Link>
                             </>
                             :
                             <Link to='signIn'>
-                                <Button size='sm' variant='outline-success'>Sign In</Button>
+                                <Button size='sm' variant='outline-primary'>Sign In</Button>
                             </Link>
                         }
                     </Nav>
