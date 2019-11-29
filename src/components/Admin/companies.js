@@ -1,47 +1,34 @@
 import React from 'react';
 import { Accordion, Card, Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Middleware from '../../store/middleware';
-
+import CompanyMiddleware from '../../store/Middleware/companyMiddleware';
 class Companies extends React.Component {
     componentDidMount() {
         this.props.getCompaniesDataDispatch()
     }
     render() {
         const {
-            // allAccounts,
             companiesData,
             deleteAccountDispatch,
             deletePostDispatch
         } = this.props;
-        // let companies = []
-        // let uid = [];
-        // for (let i in allAccounts[1]) {
-        //     companies.push(allAccounts[1][i])
-        //     uid.push(i)
-        // }
         let companies = []
         let uid = [];
         for (let i in companiesData) {
             companies.push(companiesData[i])
             uid.push(i)
         }
-        // console.log(companies)
-
-
         const _deletePost = (companyIndex, postIndex) => {
             companies[companyIndex].posts.splice(postIndex, 1)
             let selectedUid = uid.filter((item, indx) => indx === companyIndex)
             let selectedCompany = companies.filter((item, indx) => indx === companyIndex)
             deletePostDispatch(selectedCompany[0], selectedUid)
         }
-
         const _deleteAccount = (index, ACType) => {
             let selectedUid = uid.filter((item, indx) => indx === index)
             let accountType = ACType === 'Student' ? 'students' : 'companies'
             deleteAccountDispatch(accountType, selectedUid[0])
         }
-
         return (
             <Accordion>
                 {!!companies.length && companies.map((item, index) => {
@@ -119,20 +106,16 @@ class Companies extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        // allAccounts: state.reducer.allAccounts,
-        companiesData: state.reducer.companies,
-
+        companiesData: state.companyReducer.companies,
     }
 }
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        // getCompaniesDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
-        getCompaniesDataDispatch: () => dispatch(Middleware.getCompanies()),
-        deleteAccountDispatch: (...data) => dispatch(Middleware.deleteAccount(data)),
-        deletePostDispatch: (...data) => dispatch(Middleware.deletePost(data)),
+        getCompaniesDataDispatch: () => dispatch(CompanyMiddleware.getCompanies()),
+        deleteAccountDispatch: (...data) => dispatch(CompanyMiddleware.deleteAccount(data)),
+        deletePostDispatch: (...data) => dispatch(CompanyMiddleware.deletePost(data)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Companies);

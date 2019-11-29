@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Table, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Middleware from '../../store/middleware';
-
+import AuthMiddleware from '../../store/Middleware/authMiddleware';
+import CompanyMiddleware from '../../store/Middleware/companyMiddleware';
 class PrevPosts extends React.Component {
     constructor(props) {
         super(props);
@@ -12,13 +12,11 @@ class PrevPosts extends React.Component {
             text: 'Edit'
         }
     }
-
     componentDidUpdate(prevProps) {
         if (prevProps.user !== this.props.user && this.props.user.length) {
             this.setState({ posts: this.props.user[0].posts })
         }
     }
-
     componentDidMount() {
         this.props.userStatusDispatch()
     }
@@ -28,7 +26,6 @@ class PrevPosts extends React.Component {
         posts[index][key] = value;
         this.setState({ posts });
     }
-
     _update = (key) => {
         this.setState({
             flag: this.state.flag ? false : true
@@ -37,7 +34,6 @@ class PrevPosts extends React.Component {
             this.props.updateDispatch(this.state.posts, key)
         }
     }
-
     render() {
         const { user, deletePostDispatch } = this.props;
         const { posts, flag } = this.state;
@@ -45,7 +41,6 @@ class PrevPosts extends React.Component {
             user[0].posts.splice(index, 1);
             deletePostDispatch(user)
         }
-
         return (
             <>
                 {posts && posts.length ?
@@ -111,17 +106,16 @@ class PrevPosts extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        user: state.reducer.user
+        user: state.AuthReducer.user
     }
 }
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        deletePostDispatch: (data) => dispatch(Middleware.deletePost(data)),
-        updateDispatch: (...data) => dispatch(Middleware.updatePost(data)),
-        userStatusDispatch: () => dispatch(Middleware.userStatus())
+        deletePostDispatch: (data) => dispatch(CompanyMiddleware.deletePost(data)),
+        updateDispatch: (...data) => dispatch(CompanyMiddleware.updatePost(data)),
+        userStatusDispatch: () => dispatch(AuthMiddleware.userStatus())
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(PrevPosts);

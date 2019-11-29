@@ -1,22 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, FormControl, Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Middleware from '../../store/middleware';
 import { Link, Redirect } from 'react-router-dom';
-
-// let w = window.screen.availWidth
-
-// const styles = {
-//     position: 'absolute',
-//     left: w / 2.5,
-//     minWidth: '250px',
-//     textAlign: 'center',
-// }
-
-// const linkStyle = {
-//     color: '#212529',
-//     textDecoration: 'none'
-// }
+import AuthMiddleware from '../../store/Middleware/authMiddleware';
 class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
@@ -75,18 +61,29 @@ class NavigationBar extends React.Component {
         )
     }
 }
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        user: state.reducer.user,
-        // message: state.reducer.message
+        user: state.AuthReducer.user,
     }
 }
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        userStatusDispatch: () => dispatch(Middleware.userStatus()),
-        signOutDispatch: () => dispatch(Middleware.signOut()),
-        loginDispatch: data => dispatch(Middleware.Login(data))
+        userStatusDispatch: () => dispatch(AuthMiddleware.userStatus()),
+        signOutDispatch: () => dispatch(AuthMiddleware.signOut()),
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);
+
+// let w = window.screen.availWidth
+
+// const styles = {
+//     position: 'absolute',
+//     left: w / 2.5,
+//     minWidth: '250px',
+//     textAlign: 'center',
+// }
+
+// const linkStyle = {
+//     color: '#212529',
+//     textDecoration: 'none'
+// }

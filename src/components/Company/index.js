@@ -5,7 +5,6 @@ import Notifications from './notifications';
 import Profile from './profile';
 import AddNewPost from './addNewPost';
 import PrevPosts from './prevPosts';
-
 export default class CompanyDeshboard extends React.Component {
     render() {
         return (
@@ -17,16 +16,16 @@ export default class CompanyDeshboard extends React.Component {
                                 <Nav.Link eventKey="first">Job Applications</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="second">Notifications</Nav.Link>
+                                <Nav.Link eventKey="second">Add New Post</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="third">Profile</Nav.Link>
+                                <Nav.Link eventKey="third">Previous Posts</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="fourth">Previous Posts</Nav.Link>
+                                <Nav.Link eventKey="fourth">Notifications</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="fifth">Add New Post</Nav.Link>
+                                <Nav.Link eventKey="fifth">Profile</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
@@ -36,16 +35,16 @@ export default class CompanyDeshboard extends React.Component {
                                 <JobApplications />
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
-                                <Notifications />
+                                <AddNewPost />
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
-                                <Profile />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="fourth">
                                 <PrevPosts />
                             </Tab.Pane>
+                            <Tab.Pane eventKey="fourth">
+                                <Notifications />
+                            </Tab.Pane>
                             <Tab.Pane eventKey="fifth">
-                                <AddNewPost />
+                                <Profile />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Col } from 'react-bootstrap';
-import Middleware from '../../store/middleware';
-
+import CompanyMiddleware from '../../store/Middleware/companyMiddleware';
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +17,6 @@ class Profile extends React.Component {
             flag: true
         }
     }
-
     componentDidUpdate(prevProps) {
         const { user } = this.props
         if (prevProps.user !== user) {
@@ -99,14 +97,14 @@ class Profile extends React.Component {
         );
     }
 }
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        user: state.reducer.user,
+        user: state.AuthReducer.user,
     }
 }
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        updateDispatch: (data) => dispatch(Middleware.profileUpdate(data))
+        updateDispatch: (data) => dispatch(CompanyMiddleware.profileUpdate(data))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

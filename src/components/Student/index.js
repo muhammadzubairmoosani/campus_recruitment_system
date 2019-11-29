@@ -3,13 +3,12 @@ import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import Vacancies from './vacancies';
 import Notifications from './notifications';
 import Profile from './profile';
-
 export default class StudentDeshboard extends React.Component {
     render() {
         return (
-            <Tab.Container  id="left-tabs-example" defaultActiveKey="first" >
+            <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
                 <Row>
-                    <Col sm={3} className='bg-white' style={{minHeight: '100vh'}}>
+                    <Col sm={3} className='bg-white' style={{ minHeight: '100vh' }}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
                                 <Nav.Link eventKey="first">Vacancies</Nav.Link>

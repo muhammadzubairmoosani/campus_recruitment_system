@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Col } from 'react-bootstrap';
-import Middleware from '../../store/middleware';
-
+import StudentMiddleware from '../../store/Middleware/studentMiddleware';
+import AuthMiddleware from '../../store/Middleware/authMiddleware';
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -20,11 +20,9 @@ class Profile extends React.Component {
             flag: true
         }
     }
-
     componentDidMount() {
         this.props.userStatusDispatch()
     }
-
     componentDidUpdate(prevProps) {
         const { user } = this.props
         if (prevProps.user !== user) {
@@ -44,14 +42,11 @@ class Profile extends React.Component {
             })
         }
     }
-
     _onChange = (key, value) => this.setState({ [key]: value, flag: false })
-
     _update = (...data) => {
         this.setState({ flag: true })
         this.props.updateDispatch(data)
     }
-    
     render() {
         const { user } = this.props;
         const { name, email, mobile, age, gender, marks, branch, university, otherSkills, address, flag } = this.state;
@@ -144,18 +139,15 @@ class Profile extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        user: state.reducer.user,
-        signUpUserData: state.reducer.signUpUserData,
+        user: state.AuthReducer.user,
     }
 }
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        updateDispatch: (data) => dispatch(Middleware.profileUpdate(data)),
-        userStatusDispatch: () => dispatch(Middleware.userStatus())
+        updateDispatch: (data) => dispatch(StudentMiddleware.profileUpdate(data)),
+        userStatusDispatch: () => dispatch(AuthMiddleware.userStatus())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

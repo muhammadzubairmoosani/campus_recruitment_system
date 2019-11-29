@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion, Card, Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Middleware from '../../store/middleware';
+import StudentMiddleware from '../../store/Middleware/studentMiddleware';
 let keys;
 let userKey;
 class Vacancies extends React.Component {
@@ -14,16 +14,15 @@ class Vacancies extends React.Component {
             userKey = user[1][0];
         }
     }
-
     _apply = (companyIndex, jobIndex) => {
         let companykey = keys[companyIndex];
         this.props.jobApplyDispatch(companykey, companyIndex, userKey, jobIndex)
     }
     render() {
-        const { companies, user,students } = this.props;
+        const { companies, user, students } = this.props;
         let vacancies = Object.values(companies);
         keys = Object.keys(companies);
-        console.log(students)
+        // console.log(students)
         return (
             <Accordion>
                 {!!user.length && !!vacancies.length && vacancies.map((item, index) => {
@@ -56,7 +55,7 @@ class Vacancies extends React.Component {
                                                 variant="link"
                                                 eventKey={index}
                                             >
-                                                <Button variant='success'>View</Button>
+                                                <Button>View</Button>
                                             </Accordion.Toggle>
                                         </td>
                                     </tr>
@@ -88,8 +87,9 @@ class Vacancies extends React.Component {
                                                 <td>{i.salary}</td>
                                                 <td className='text-right'>
                                                     <Button
-                                                        onClick={() => this._apply(index, indx)}
+                                                        variant='success'
                                                         disabled={isExist}
+                                                        onClick={() => this._apply(index, indx)}
                                                     >
                                                         {isExist ? 'Applied' : 'Apply'}
                                                     </Button>
@@ -106,18 +106,17 @@ class Vacancies extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        companies: state.reducer.vacancies,
-        user: state.reducer.user,
-        students: state.reducer.students
+        companies: state.StudentReducer.vacancies,
+        user: state.AuthReducer.user,
+        students: state.StudentReducer.students
     }
 }
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        viewVacanciesDispatch: () => dispatch(Middleware.getVacancies()),
-        jobApplyDispatch: (...data) => dispatch(Middleware.jobApply(data))
+        viewVacanciesDispatch: () => dispatch(StudentMiddleware.getVacancies()),
+        jobApplyDispatch: (...data) => dispatch(StudentMiddleware.jobApply(data))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Vacancies);

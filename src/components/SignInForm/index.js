@@ -2,8 +2,7 @@ import React from "react";
 import { MDBContainer, MDBRow, MDBBtn, MDBCard, MDBCardBody, MDBInput } from 'mdbreact';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Middleware from "../../store/middleware";
-
+import AuthMiddleware from "../../store/Middleware/authMiddleware";
 class SignInForm extends React.Component {
     constructor() {
         super();
@@ -19,7 +18,6 @@ class SignInForm extends React.Component {
         this.setState({ displayClass: this.props.accountType === 'Admin' && 'none' })
     }
     _onChange = (key, value) => this.setState({ [key]: value });
-
     render() {
         const {
             accountType,
@@ -107,16 +105,9 @@ class SignInForm extends React.Component {
         );
     }
 };
-function mapStateToProps(state) {
+const mapDispatchToProps = dispatch => {
     return {
-        accountType: state.reducer.accountType,
+        signInDispatch: (...data) => dispatch(AuthMiddleware.signIn(data))
     }
 }
-
-function mapDispatchToProps(dispatch) {
-    return {
-        signInDispatch: (...data) => dispatch(Middleware.signIn(data))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+export default connect(null, mapDispatchToProps)(SignInForm);

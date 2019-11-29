@@ -1,15 +1,13 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Middleware from '../../store/middleware';
-
+import CompanyMiddleware from '../../store/Middleware/companyMiddleware';
 class Students extends React.Component {
     componentDidMount() {
         this.props.getStudentsDataDispatch()
     }
     render() {
         const {
-            allAccounts,
             studentsData,
             deleteStudentDispatch
         } = this.props;
@@ -70,19 +68,15 @@ class Students extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        // allAccounts: state.reducer.allAccounts,
-        studentsData: state.reducer.students,
-
+        studentsData: state.companyReducer.students,
     }
 }
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        getStudentsDataDispatch: () => dispatch(Middleware.getStudents()),
-        deleteStudentDispatch: (...data) => dispatch(Middleware.deleteAccount(data))
-        // getStudentsDataDispatch: () => dispatch(Middleware.getCompaniesAndStudentsData()),
+        getStudentsDataDispatch: () => dispatch(CompanyMiddleware.getStudents()),
+        deleteStudentDispatch: (...data) => dispatch(CompanyMiddleware.deleteAccount(data))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Students);

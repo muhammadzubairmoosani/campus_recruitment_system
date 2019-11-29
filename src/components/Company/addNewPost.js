@@ -1,26 +1,23 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { Form, Col, Button } from 'react-bootstrap'
-import Middleware from '../../store/middleware'
-
+import CompanyMiddleware from '../../store/Middleware/companyMiddleware';
 class AddNewPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            jobTitle: '',
-            salary: '',
-            description: '',
             key: '',
+            salary: '',
+            jobTitle: '',
+            description: '',
             flag: true
         }
     }
     _onChange = (key, value) => this.setState({ [key]: value, flag: false });
-
     _dispatch(data) {
         this.props.addNewPostDispatch(data);
         this.setState({ jobTitle: '', description: '', salary: '', flag: true })
     }
-
     componentDidUpdate(prvProps) {
         const { user } = this.props;
         if (prvProps.user !== user) {
@@ -106,24 +103,21 @@ class AddNewPost extends React.Component {
 
                         <Button variant="primary" disabled={this.state.flag && 'disabled'}
                             onClick={() => this._dispatch(this.state)}
-                        >Update</Button>
+                        >Add New</Button>
                     </Form >
                     : null}
             </>
         );
     }
 };
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
-        user: state.reducer.user
+        user: state.AuthReducer.user
     }
 }
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        addNewPostDispatch: data => dispatch(Middleware.addNewPost(data))
+        addNewPostDispatch: data => dispatch(CompanyMiddleware.addNewPost(data))
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewPost);

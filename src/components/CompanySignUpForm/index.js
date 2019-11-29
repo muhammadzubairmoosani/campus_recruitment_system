@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { Form, Col, Button } from 'react-bootstrap'
-import Middleware from '../../store/middleware'
-
+import AuthMiddleware from '../../store/Middleware/authMiddleware'
 class CompanySignUp extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +18,6 @@ class CompanySignUp extends React.Component {
         }
     }
     _onChange = (key, value) => this.setState({ [key]: value });
-
     render() {
         const { signUpDispatch } = this.props;
         return (
@@ -69,17 +67,9 @@ class CompanySignUp extends React.Component {
         );
     }
 };
-
-function mapStateToProps(state) {
+const mapDispatchToProps = dispatch => {
     return {
-        // accountType: state.reducer.accountType,
+        signUpDispatch: data => dispatch(AuthMiddleware.signUp(data))
     }
 }
-
-function mapDispatchToProps(dispatch) {
-    return {
-        signUpDispatch: data => dispatch(Middleware.signUp(data))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CompanySignUp);
+export default connect(null, mapDispatchToProps)(CompanySignUp);
