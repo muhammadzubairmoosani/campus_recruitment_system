@@ -64,7 +64,7 @@ class SignInForm extends React.Component {
                         <span
                             className={select && select !== 'Select your account type' ? 'text-success' : 'text-danger'}
                             style={{ marginLeft: '.5em' }}
-                        >Select your account type before
+                        >Select your account type before sign-up
                         </span>
                     </Form.Text>
                     <Link to={select === 'students' ? '/studentSignUp' : '/companySignUp'}>

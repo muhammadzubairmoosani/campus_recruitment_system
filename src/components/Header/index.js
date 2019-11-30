@@ -20,9 +20,10 @@ class NavigationBar extends React.Component {
             signOutDispatch,
         } = this.props;
         return (
-            <Navbar bg="light" expand="lg" className='shadow-sm py-3 px-5 ' >
+            <Navbar bg="light" expand="lg" className='shadow-sm py-3 px-5' >
                 <Navbar.Brand
-                    style={{ fontWeight: 'bold', fontSize: 17, color: '#4081ED', userSelect: 'none' }}
+                    className='text-dark'
+                    style={{ fontWeight: 'bold', fontSize: 17, userSelect: 'none' }}
                 >
                     Campus Recruitment System
                 </Navbar.Brand>
@@ -38,10 +39,10 @@ class NavigationBar extends React.Component {
                                 }
                                 />
                                 <Link to='/' onClick={() => signOutDispatch()}>
-                                    <Button 
-                                    size='sm' 
-                                    variant='outline-dark' 
-                                    onClick={() => signOutDispatch()}
+                                    <Button
+                                        size='sm'
+                                        variant='outline-dark'
+                                        onClick={() => signOutDispatch()}
                                     >Sign Out
                                     </Button>
                                 </Link>
