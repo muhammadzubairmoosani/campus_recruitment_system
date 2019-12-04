@@ -29,7 +29,7 @@ class Vacancies extends React.Component {
                                                 <td>{item.jobTitle}</td>
                                                 <td>{item.description}</td>
                                                 <td>{item.salary}</td>
-                                                <td className='p-0 text-right'>
+                                                <td className='text-right'>
                                                     <Accordion.Toggle
                                                         disabled={item.appliedStudents ? '' : 'disabled'}
                                                         as={Button}

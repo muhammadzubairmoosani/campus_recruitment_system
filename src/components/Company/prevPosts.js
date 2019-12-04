@@ -8,8 +8,8 @@ class PrevPosts extends React.Component {
         super(props);
         this.state = {
             posts: [],
-            flag: true,
-            text: 'Edit'
+            text: 'Edit',
+            flagIndex: ''
         }
     }
     componentDidUpdate(prevProps) {
@@ -20,23 +20,22 @@ class PrevPosts extends React.Component {
     componentDidMount() {
         this.props.userStatusDispatch()
     }
-
     _onChange = (key, value, index) => {
         let posts = [...this.state.posts];
         posts[index][key] = value;
         this.setState({ posts });
     }
-    _update = (key) => {
+    _update = (key, index) => {
         this.setState({
-            flag: this.state.flag ? false : true
-        }, () => this.setState({ text: this.state.flag ? 'Edit' : 'Update' }))
+            flagIndex: index
+        }, () => this.setState({ text: this.state.text === 'Edit' ? 'Update' : 'Edit' }))
         if (this.state.text === 'Update') {
             this.props.updateDispatch(this.state.posts, key)
         }
     }
     render() {
         const { user, deletePostDispatch } = this.props;
-        const { posts, flag } = this.state;
+        const { posts, flagIndex, text } = this.state;
         const _deletePost = (index) => {
             user[0].posts.splice(index, 1);
             deletePostDispatch(user)
@@ -62,7 +61,7 @@ class PrevPosts extends React.Component {
                                             type="text"
                                             value={item.jobTitle}
                                             onChange={(text) => this._onChange('jobTitle', text.target.value, index)}
-                                            disabled={flag && 'disabled'}
+                                            disabled={flagIndex === index && text === 'Update' ? false : true}
                                         />
                                     </td>
                                     <td>
@@ -70,7 +69,7 @@ class PrevPosts extends React.Component {
                                             type="text"
                                             value={item.salary}
                                             onChange={(text) => this._onChange('salary', text.target.value, index)}
-                                            disabled={flag && 'disabled'}
+                                            disabled={flagIndex === index && text === 'Update' ? false : true}
                                         />
                                     </td>
                                     <td>
@@ -78,12 +77,12 @@ class PrevPosts extends React.Component {
                                             type="text"
                                             value={item.description}
                                             onChange={(text) => this._onChange('description', text.target.value, index)}
-                                            disabled={flag && 'disabled'}
+                                            disabled={flagIndex === index && text === 'Update' ? false : true}
                                         />
                                     </td>
                                     <td className='text-center'>
-                                        <Button variant="success" onClick={() => this._update(user[1][0])}>
-                                            {this.state.text}
+                                        <Button variant="success" onClick={() => this._update(user[1][0], index)}>
+                                            {flagIndex === index ? text : 'Edit'}
                                         </Button>
                                     </td>
                                     <td className='text-center'>
@@ -105,7 +104,6 @@ class PrevPosts extends React.Component {
         );
     }
 }
-
 const mapStateToProps = state => {
     return {
         user: state.AuthReducer.user

@@ -21,9 +21,9 @@ export default class CompanyDeshboard extends React.Component {
                             <Nav.Item>
                                 <Nav.Link eventKey="third">Previous Posts</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            {/* <Nav.Item>
                                 <Nav.Link eventKey="fourth">Notifications</Nav.Link>
-                            </Nav.Item>
+                            </Nav.Item> */}
                             <Nav.Item>
                                 <Nav.Link eventKey="fifth">Profile</Nav.Link>
                             </Nav.Item>

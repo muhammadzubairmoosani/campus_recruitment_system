@@ -17,9 +17,9 @@ export default class AdminDeshboard extends React.Component {
                             <Nav.Item>
                                 <Nav.Link eventKey="second">View Companies</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            {/* <Nav.Item>
                                 <Nav.Link eventKey="third">Send Notification</Nav.Link>
-                            </Nav.Item>
+                            </Nav.Item> */}
                         </Nav>
                     </Col>
                     <Col sm={9} className='p-0 bg-white'>

@@ -47,7 +47,7 @@ class Vacancies extends React.Component {
                                         <td>{item.mobile}</td>
                                         <td>{item.address}</td>
                                         <td>{item.description}</td>
-                                        <td className='p-0 text-center'>
+                                        <td className='text-right'>
                                             <Accordion.Toggle
                                                 disabled={item.posts ? '' : 'disabled'}
                                                 as={Button}

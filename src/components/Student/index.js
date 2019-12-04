@@ -13,9 +13,9 @@ export default class StudentDeshboard extends React.Component {
                             <Nav.Item>
                                 <Nav.Link eventKey="first">Vacancies</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            {/* <Nav.Item>
                                 <Nav.Link eventKey="second">Notifications</Nav.Link>
-                            </Nav.Item>
+                            </Nav.Item> */}
                             <Nav.Item>
                                 <Nav.Link eventKey="third">Profile</Nav.Link>
                             </Nav.Item>
