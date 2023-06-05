@@ -9,6 +9,21 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+## User login credentials for different portals.
+
+### Admin Portal - (don't select account type when you login by admin)
+email: admin@g.com
+pass: 444444
+
+### Company Portal
+email company@gmail.com
+pass: Company
+
+### Student Portal
+email: student@gmail.com
+pass: Hello1
+
+
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
