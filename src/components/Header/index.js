@@ -38,7 +38,7 @@ class NavigationBar extends React.Component {
                                             'companyDeshboard' : null
                                 }
                                 />
-                                <Link to='/' onClick={() => signOutDispatch()}>
+                                <Link to='/signIn' onClick={() => signOutDispatch()}>
                                     <Button
                                         size='sm'
                                         variant='outline-dark'

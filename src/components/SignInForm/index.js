@@ -23,7 +23,19 @@ class SignInForm extends React.Component {
         return (
             <div className='d-flex justify-content-center mt-5'>
                 <Form className='bg-white col-xl-4 col-md-6 col-11 rounded-lg p-4'>
-                    <h3 className="deep-grey-text mb-4" >Sign-in</h3>
+                    <h3 className="deep-grey-text mb-2" >Sign-in</h3>
+                    <div class="d-flex justify-between mb-2">
+                        <div>
+                            <p>Student login</p>
+                            <p>Email: std@test.com</p>
+                            <p>Password: 123456</p>
+                        </div>
+                        <div>
+                            <p>Company login</p>
+                            <p>Email: company@test.com</p>
+                            <p>Password: 123456</p>
+                        </div>
+                    </div>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
@@ -73,7 +85,7 @@ class SignInForm extends React.Component {
                             className='w-100'
                             disabled={select && select !== 'Select your account type' ? '' : 'disabled'}
                         >Sign Up
-                    </Button>
+                        </Button>
                     </Link>
                 </Form>
             </div >
